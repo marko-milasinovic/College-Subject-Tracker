@@ -4,6 +4,7 @@ An offline java application for tracking the time and date of lectures and other
 ## Built with
 * [Maven](https://maven.apache.org/what-is-maven.html)
 * [OpenJavaFX](https://wiki.openjdk.java.net/display/OpenJFX)
+* [OpenJDK - runtime](https://www.openlogic.com/openjdk-downloads)
 
 ## UX Requirements
 The app should have 2 screens:
