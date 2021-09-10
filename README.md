@@ -2,8 +2,8 @@
 An offline java application for tracking the time and date of lectures and other subject specific info throughout the semester
 
 ## Built with
-* [Maven](https://maven.apache.org/what-is-maven.html)
-* [OpenJavaFX](https://wiki.openjdk.java.net/display/OpenJFX)
+* [Maven](https://mvnrepository.com/artifact/org.openjfx/javafx/11.0.2)
+* [OpenJavaFX](https://openjfx.io/openjfx-docs/)
 * [OpenJDK - runtime](https://www.openlogic.com/openjdk-downloads)
 
 ## UX Requirements
