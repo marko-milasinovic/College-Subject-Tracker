@@ -27,7 +27,7 @@ Data will be stored in ../user directory in a .json format.
 | *Professor* | Person | person of Professor type |
 | *Assistent* | Person | person of Assistent type | 
 | *WebLinks* | List<WebLink> | list of links to subject materials | max length of 256 characters per link, with a String descriptor of the link provided
-| *Espb* | Integer	|	espb value of the subject | only positive, up to 16
+| *maxEspb* | Integer	|	espb value of the subject | only positive, up to 16
 | *semesterId* | Integer	|	the semester number where the user got the subject | only positive, up to 16
 | *LectureSchedule* | Schedule | time schedule with relevant info for lectures | presumably only 1 day per week for the given schedule
 | *ExerciseSchedule* | Schedule | time schedule with relevant info for exercises | presumably only 1 day per week for the given schedule
