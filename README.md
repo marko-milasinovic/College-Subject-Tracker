@@ -40,5 +40,12 @@ This chart is located on the main screen view page, and contains the following f
 |:----:|:----:|:-----------:|:-----------:|:-----------:|
 |*ex. Programming*| Monday: 16:15 - 19:00 | Wednesday: 17:15 - 20:00 | x | Exam-1 x out of 15 points, Exam-2 x out of 20 points
 
-### Additional demands
-x
+### Dependencies
+```
+<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.8.8</version>
+</dependency>
+```
