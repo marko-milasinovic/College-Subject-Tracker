@@ -76,4 +76,4 @@ Data will be stored in ../user directory in a .json format.
 ```
 
  ## License
- Licensed under (GPLv3)[https://www.gnu.org/licenses/gpl-3.0.html]
+ Licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
