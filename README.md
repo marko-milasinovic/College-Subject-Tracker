@@ -21,14 +21,12 @@ This allows for easy import/export of the database.
 **_Subject_**:
 | Name | Type | Description | Limits |
 |:----:|:----:|:-----------:|:-----------:|
-| *Id* | Integer	|	unique subject id | only positive, up to 2 147 483 647
-| *SubjectName* | String	| subject name | max length of 127 characters (for easier sql storage)
-| *AbbreviatedName* | String | abbreviated subject name | max length of 10 characters
-| *Description* | String | short subject description | max length of 65,536 characters
-| *SemesterPlan* | String | text explaining the plan for the semester | max length of 65,536 characters
-| *ProfessorName* | String | name of the Professor | max length of 127 characters
-| *AssistentName* | String | name of the Assistent | max length of 127 characters
-| *LabAssistentName* | String | name of the Lab Assistent | max length of 127 characters
+| *Uuid* | UUID |	unique subject id | must be unique
+| *SubjectLongName* | String	| subject name | max length of 127 characters (for easier sql storage)
+| *SubjectShortName* | String | abbreviated subject name | max length of 10 characters
+| *SubjectDescription* | String | short subject description | max length of 65,536 characters
+| *Professor* | Person | person of Professor type |
+| *Assistent* | Person | person of Assistent type | 
 | *WebLinks* | List<WebLink> | list of links to subject materials | max length of 256 characters per link, with a String descriptor of the link provided
 | *Espb* | Integer	|	espb value of the subject | only positive, up to 16
 | *semesterId* | Integer	|	the semester number where the user got the subject | only positive, up to 16
