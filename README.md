@@ -45,14 +45,14 @@ Data will be stored in ../user directory in a .json format.
  **_Schedule_**:
 | Variable name | Variable type | Description |
 |:----:|:----:|:-----------:|
-| *Day* | Enum |	day of week (mon/tue/wed...)
+| *DayOfWeek* | Enum |	day of week (mon/tue/wed...)
 | *Time* | Integer |	start time of first lesson
 | *Count* | Integer |	number of lessons for the given day
 
- **_Day_** - Enum:
+ **_DayOfWeek_** - Enum:
 | Variable name | Variable type | Description |
 |:----:|:----:|:-----------:|
-| *DayOfWeek* | Enum |	mon/tue/wed/thu/fri/sat/sun
+| *Day* | String |	mon/tue/wed/thu/fri/sat/sun
 | *Position* | Integer |	mon=1, tue=2 ...
 | *ReadableDay* | String |	region localised day name
 
