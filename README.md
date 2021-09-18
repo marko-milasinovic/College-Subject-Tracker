@@ -13,13 +13,12 @@ The app should have 2 screens:
 * Edit screen, where the user can edit subjects and their info
 * (Possible) Minimised screen, that consists of a daily lecture list with the relevant info
 
-## Database requirements
-All data should be stored in a .txt/.csv file in a humanly readable format.
-This allows for easy import/export of the database.
+## Data storage
+Data will be stored in ../user directory in a .json format.
 
 ## Models
 **_Subject_**:
-| Name | Type | Description | Limits |
+| Variable name | Variable type | Description | Limits |
 |:----:|:----:|:-----------:|:-----------:|
 | *Uuid* | UUID |	unique subject id | must be unique
 | *SubjectLongName* | String	| subject name | max length of 127 characters (for easier sql storage)
@@ -30,17 +29,34 @@ This allows for easy import/export of the database.
 | *WebLinks* | List<WebLink> | list of links to subject materials | max length of 256 characters per link, with a String descriptor of the link provided
 | *Espb* | Integer	|	espb value of the subject | only positive, up to 16
 | *semesterId* | Integer	|	the semester number where the user got the subject | only positive, up to 16
-| *LectureSchedule* | Schedule | time schedule with relevant info for lectures | /
-| *ExerciseSchedule* | Schedule | time schedule with relevant info for exercises | /
-| *LaboratorySchedule* | Schedule | time schedule with relevant info for laboratory exercises | /
+| *LectureSchedule* | Schedule | time schedule with relevant info for lectures | presumably only 1 day per week for the given schedule
+| *ExerciseSchedule* | Schedule | time schedule with relevant info for exercises | presumably only 1 day per week for the given schedule
+| *LaboratorySchedule* | Schedule | time schedule with relevant info for laboratory exercises | presumably only 1 day per week for the given schedule
 
-### Charts 
-This chart is located on the main screen view page, and contains the following fields:
-| Subject Name | Lectures | Exercises | Laboratories | Semester requirements
-|:----:|:----:|:-----------:|:-----------:|:-----------:|
-|*ex. Programming*| Monday: 16:15 - 19:00 | Wednesday: 17:15 - 20:00 | x | Exam-1 x out of 15 points, Exam-2 x out of 20 points
+**_Person_**:
+| Variable name | Variable type | Description |
+|:----:|:----:|:-----------:|
+| *Uuid* | UUID |	unique person id
+| *FirstName* | String |	first name of the person
+| *LastName* | String |	last name of the person
+| *EMail* | String |	person's email
+| *Occupation* | String |	given occupation, eg. Professor, Assistent, LabAssistent
 
-### Dependencies
+ **_Schedule_**:
+| Variable name | Variable type | Description |
+|:----:|:----:|:-----------:|
+| *Day* | Enum |	day of week (mon/tue/wed...)
+| *Time* | Integer |	start time of first lesson
+| *Count* | Integer |	number of lessons for the given day
+
+ **_Day_** - Enum:
+| Variable name | Variable type | Description |
+|:----:|:----:|:-----------:|
+| *DayOfWeek* | Enum |	mon/tue/wed/thu/fri/sat/sun
+| *Position* | Integer |	mon=1, tue=2 ...
+| *ReadableDay* | String |	region localised day name
+
+## Dependencies
 ```
 <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 <dependency>
@@ -57,5 +73,7 @@ This chart is located on the main screen view page, and contains the following f
     <artifactId>guava</artifactId>
     <version>30.1.1-jre</version>
 </dependency>
-
 ```
+
+ ## License
+ Licensed under (GPLv3)[https://www.gnu.org/licenses/gpl-3.0.html]
