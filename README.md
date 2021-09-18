@@ -57,23 +57,9 @@ Data will be stored in ../user directory in a .json format.
 | *ReadableDay* | String |	region localised day name
 
 ## Dependencies
-```
-<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-<dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.8.8</version>
-</dependency>
-```
+* OpenJFX (JavaFX 16)[https://mvnrepository.com/artifact/org.openjfx/javafx/16]
+* Google's (Gson)[https://mvnrepository.com/artifact/com.google.code.gson/gson]
+* Google's (Guava)[https://mvnrepository.com/artifact/com.google.guava/guava]
 
-```
- <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-<dependency>
-    <groupId>com.google.guava</groupId>
-    <artifactId>guava</artifactId>
-    <version>30.1.1-jre</version>
-</dependency>
-```
-
- ## License
- Licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
+## License
+Licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
