@@ -49,3 +49,13 @@ This chart is located on the main screen view page, and contains the following f
     <version>2.8.8</version>
 </dependency>
 ```
+
+```
+ <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+<dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>30.1.1-jre</version>
+</dependency>
+
+```
