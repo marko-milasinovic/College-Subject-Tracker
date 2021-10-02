@@ -8,7 +8,7 @@ An offline java application for tracking the time and date of lectures and other
 
 ## Project core release status
 - [ ] Main subject viewer screen (Main view screen, where the user can look at all subjects)
-    -[ ] Current day's subject annotated
+    - [ ] Current day's subject annotated
 - [ ] Read data from file
 - [ ] Write data to file
 - [x] Data models
@@ -18,6 +18,8 @@ An offline java application for tracking the time and date of lectures and other
 
 ## Project feature release status
 - [ ] Subject editor screen (where the user can edit subjects and their info)
+- [x] .txt human readable save files
+    - [ ] optional .gson save files
 - [ ] System specific save file paths (in ../user directory in a .json format.)
 - [ ] Windows notification bar alerts
 - [ ] Various optimisations e.g. Platform.runLater() 
