@@ -7,10 +7,10 @@ An offline java application for tracking the time and date of lectures and other
 * [OpenJDK - runtime](https://www.openlogic.com/openjdk-downloads)
 
 ## Project core release status
-- [] Main subject viewer screen (Main view screen, where the user can look at all subjects)
-  -[] Current day's subject annotated
-- [] Read data from file
-- [] Write data to file
+- [ ] Main subject viewer screen (Main view screen, where the user can look at all subjects)
+  -[ ] Current day's subject annotated
+- [ ] Read data from file
+- [ ] Write data to file
 - [x] Framework for data manipulation
 - [x] Data models
 - [ ] Improved design
