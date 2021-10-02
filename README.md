@@ -13,7 +13,8 @@ An offline java application for tracking the time and date of lectures and other
 - [ ] Write data to file
 - [x] Data models
     - [x] Framework for data manipulation
-- [ ] Improved design
+- [ ] Improved design (e.g. icons)
+    - [ ] Tooltips
 - [ ] First release
 
 ## Project feature release status
@@ -24,45 +25,8 @@ An offline java application for tracking the time and date of lectures and other
 - [ ] Windows notification bar alerts
 - [ ] Various optimisations e.g. Platform.runLater() 
 
-## Models
-**_Subject_**:
-| Variable name | Variable type | Description | Limits |
-|:----:|:----:|:-----------:|:-----------:|
-| *Uuid* | UUID |	unique subject id | must be unique
-| *SubjectLongName* | String	| subject name | max length of 127 characters (for easier sql storage)
-| *SubjectShortName* | String | abbreviated subject name | max length of 10 characters
-| *SubjectDescription* | String | short subject description | max length of 65,536 characters
-| *Professor* | Person | person of Professor type |
-| *Assistent* | Person | person of Assistent type | 
-| *WebLinks* | List<WebLink> | list of links to subject materials | max length of 256 characters per link, with a String descriptor of the link provided
-| *maxEspb* | Integer	|	espb value of the subject | only positive, up to 16
-| *semesterId* | Integer	|	the semester number where the user got the subject | only positive, up to 16
-| *LectureSchedule* | Schedule | time schedule with relevant info for lectures | presumably only 1 day per week for the given schedule
-| *ExerciseSchedule* | Schedule | time schedule with relevant info for exercises | presumably only 1 day per week for the given schedule
-| *LaboratorySchedule* | Schedule | time schedule with relevant info for laboratory exercises | presumably only 1 day per week for the given schedule
-
-**_Person_**:
-| Variable name | Variable type | Description |
-|:----:|:----:|:-----------:|
-| *Uuid* | UUID |	unique person id
-| *FirstName* | String |	first name of the person
-| *LastName* | String |	last name of the person
-| *EMail* | String |	person's email
-| *Occupation* | String |	given occupation, eg. Professor, Assistent, LabAssistent
-
- **_Schedule_**:
-| Variable name | Variable type | Description |
-|:----:|:----:|:-----------:|
-| *DayOfWeek* | Enum |	day of week (mon/tue/wed...)
-| *Time* | Integer |	start time of first lesson
-| *Count* | Integer |	number of lessons for the given day
-
- **_DayOfWeek_** - Enum:
-| Variable name | Variable type | Description |
-|:----:|:----:|:-----------:|
-| *Day* | String |	mon/tue/wed/thu/fri/sat/sun
-| *Position* | Integer |	mon=1, tue=2 ...
-| *ReadableDay* | String |	region localised day name
+## Main subject viewer screen
+![Subject viewer screen_todo](/assets/subject_viewer_screen.png)
 
 ## Dependencies
 * OpenJFX [JavaFX 16](https://mvnrepository.com/artifact/org.openjfx/javafx/16)
