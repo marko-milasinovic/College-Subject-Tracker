@@ -1,7 +1,7 @@
 
 <h2 align="center"> College Subject Tracker </h2> 
 
-<h3 align="center"> An offline java application for tracking the time of lectures and other subject specific info throughout the semester </h3>
+<h3 align="center"> Offline java application for tracking the time of lectures and other subject specific info throughout the semester </h3>
 
 <p align="center">
 <img src="https://img.shields.io/badge/Support-Windows%20x64-blue?logo=Windows&style=flat-square">
