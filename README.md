@@ -1,5 +1,5 @@
 
-<h2 align="center"> College-Subject-Tracker </h2> 
+<h2 align="center"> College Subject Tracker </h2> 
 
 <h3 align="center"> An offline java application for tracking the time of lectures and other subject specific info throughout the semester </h3>
 
