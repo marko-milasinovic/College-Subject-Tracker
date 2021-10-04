@@ -1,5 +1,15 @@
-# College-Subject-Tracker
-An offline java application for tracking the time and date of lectures and other subject specific info throughout the semester
+
+<h2 align="center"> College-Subject-Tracker </h2> 
+
+<h3 align="center"> An offline java application for tracking the time of lectures and other subject specific info throughout the semester </h3>
+
+<p align="center">
+<img src="https://img.shields.io/badge/Support-Windows%20x64-blue?logo=Windows&style=flat-square">
+![GitHub](https://img.shields.io/github/license/marko-milasinovic/College-Subject-Tracker?style=flat-square)
+</p>
+
+# [💾Download Latest Stable Build](https://github.com/marko-milasinovic/College-Subject-Tracker/releases)
+Supported Languages: English
 
 ## Built and run with
 * [Maven](https://mvnrepository.com/artifact/org.openjfx/javafx/16)
