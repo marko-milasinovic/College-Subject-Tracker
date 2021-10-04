@@ -9,9 +9,9 @@ An offline java application for tracking the time and date of lectures and other
 ## Project core release status
 - [ ] Main subject viewer screen (Main view screen, where the user can look at all subjects)
     - [ ] Auto updated current subject information
-    - [ ] Coloured current day's subjects in table
+    - [x] Coloured current day's subjects in table
 - [x] Read data from file
-    - [ ] Write data to file
+    - [x] Write data to file
 - [x] Data models
     - [x] Framework for data manipulation
 - [ ] Improved design (e.g. icons)
