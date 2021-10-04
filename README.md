@@ -38,7 +38,7 @@ Supported Languages: English
 - [x] Physical monitor resolution dependant scaling / scrolling
 
 ## Main subject viewer screen
-![Subject viewer screen_todo](/assets/subject_viewer_screen.png)
+![Main viewer screen](/assets/cst_main_view_screen.png)
 
 ## Dependencies
 * OpenJFX [JavaFX 16](https://mvnrepository.com/artifact/org.openjfx/javafx/16)
