@@ -45,5 +45,6 @@ Supported Languages: English
 * Google's [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) - a Java serialization/deserialization library to convert Java Objects into JSON and back
 * Google's [Guava](https://mvnrepository.com/artifact/com.google.guava/guava) - a suite of core and expanded libraries that include utility classes, Google's collections, I/O classes
 
-## License
+## Licenses
 Licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
+Icons licensed separately by Freepik from www.flaticon.com
