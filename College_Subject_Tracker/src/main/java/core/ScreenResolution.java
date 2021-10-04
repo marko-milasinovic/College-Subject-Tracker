@@ -15,7 +15,6 @@ public final class ScreenResolution {
 	public static final double SCALE_FACTOR = 0.7;
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variables
 	//
@@ -23,49 +22,43 @@ public final class ScreenResolution {
 	public static int TRUE_HEIGHT = 1080;
 	public static int SCALED_WIDTH = 600;
 	public static int SCALED_HEIGHT = 400;
-
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Methods
 	//
-	public static final boolean initialiseScreenResolution()
-	{
+	public static final boolean initialiseScreenResolution() {
 		try {
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			
 			TRUE_WIDTH = screenSize.width;
 			TRUE_HEIGHT = screenSize.height;
-		}catch(Exception e){
+		}
+		catch (Exception e) {
 			System.out.println("Error while reading screen size");
 			return false;
 		}
 		
-		int scaled = (int)(TRUE_WIDTH * SCALE_FACTOR);
+		int scaled = (int) (TRUE_WIDTH * SCALE_FACTOR);
 		
-		if(scaled < SCALED_WIDTH_MIN){
+		if (scaled < SCALED_WIDTH_MIN) {
 			scaled = SCALED_WIDTH_MIN;
-		}
-		else if(scaled > SCALED_WIDTH_MAX){
+		} else if (scaled > SCALED_WIDTH_MAX) {
 			scaled = SCALED_WIDTH_MAX;
 		}
 		
 		SCALED_WIDTH = scaled;
 		
-		scaled = (int)(TRUE_HEIGHT * SCALE_FACTOR);
-		if(scaled < SCALED_HEIGHT_MIN){
+		scaled = (int) (TRUE_HEIGHT * SCALE_FACTOR);
+		if (scaled < SCALED_HEIGHT_MIN) {
 			scaled = SCALED_HEIGHT_MIN;
-		}
-		else if(scaled > SCALED_HEIGHT_MAX){
+		} else if (scaled > SCALED_HEIGHT_MAX) {
 			scaled = SCALED_HEIGHT_MAX;
 		}
 		
 		SCALED_HEIGHT = scaled;
 		return true;
 	}
-	
-	
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

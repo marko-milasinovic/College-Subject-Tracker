@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public final class Subject implements Comparable<Subject>
-{
+//https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java?rq=1
+public final class Subject implements Comparable<Subject> {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variables
 	//
@@ -31,7 +31,6 @@ public final class Subject implements Comparable<Subject>
 	//private Schedule LaboratorySchedule;
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Constructor for NEW subjects
 	//
@@ -43,19 +42,7 @@ public final class Subject implements Comparable<Subject>
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Constructor for EXISTING subjects
 	//
-	public Subject(
-			UUID uuid,
-			String subjectLongName,
-			String subjectShortName,
-			String subjectSubjectDescription,
-			Person professor,
-			Person assistent,
-			List<WebLink> webLinks,
-			int maxEspb,
-			int semesterId,
-			Schedule lectureSchedule,
-			Schedule exerciseSchedule
-	) {
+	public Subject(UUID uuid, String subjectLongName, String subjectShortName, String subjectSubjectDescription, Person professor, Person assistent, List<WebLink> webLinks, int maxEspb, int semesterId, Schedule lectureSchedule, Schedule exerciseSchedule) {
 		this();
 		
 		this.uuid = uuid;
@@ -72,94 +59,92 @@ public final class Subject implements Comparable<Subject>
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Basic public methods
 	//
-	public UUID getUuid() {
+	public final UUID getUuid() {
 		return uuid;
 	}
 	
-	public String getSubjectLongName() {
+	public final String getSubjectLongName() {
 		return SubjectLongName;
 	}
 	
-	public void setSubjectLongName(String subjectLongName) {
+	public final void setSubjectLongName(String subjectLongName) {
 		SubjectLongName = subjectLongName;
 	}
 	
-	public String getSubjectShortName() {
+	public final String getSubjectShortName() {
 		return SubjectShortName;
 	}
 	
-	public void setSubjectShortName(String subjectShortName) {
+	public final void setSubjectShortName(String subjectShortName) {
 		SubjectShortName = subjectShortName;
 	}
 	
-	public String getSubjectDescription() {
+	public final String getSubjectDescription() {
 		return subjectDescription;
 	}
 	
-	public void setSubjectDescription(String subjectDescription) {
+	public final void setSubjectDescription(String subjectDescription) {
 		subjectDescription = subjectDescription;
 	}
 	
-	public Person getProfessor() {
+	public final Person getProfessor() {
 		return professor;
 	}
 	
-	public void setProfessor(Person professor) {
+	public final void setProfessor(Person professor) {
 		this.professor = professor;
 	}
 	
-	public Person getAssistent() {
+	public final Person getAssistent() {
 		return assistent;
 	}
 	
-	public void setAssistent(Person assistent) {
+	public final void setAssistent(Person assistent) {
 		this.assistent = assistent;
 	}
 	
-	public List<WebLink> getWebLinks() {
+	public final List<WebLink> getWebLinks() {
 		return webLinks;
 	}
 	
-	public void setWebLinks(List<WebLink> webLinks) {
+	public final void setWebLinks(List<WebLink> webLinks) {
 		this.webLinks = webLinks;
 	}
 	
-	public int getMaxEspb() {
+	public final int getMaxEspb() {
 		return maxEspb;
 	}
 	
-	public void setMaxEspb(int maxEspb) {
+	public final void setMaxEspb(int maxEspb) {
 		this.maxEspb = maxEspb;
 	}
 	
-	public int getSemesterId() {
+	public final int getSemesterId() {
 		return semesterId;
 	}
 	
-	public void setSemesterId(int semesterId) {
+	public final void setSemesterId(int semesterId) {
 		this.semesterId = semesterId;
 	}
 	
-	public Schedule getLectureSchedule() {
+	public final Schedule getLectureSchedule() {
 		return lectureSchedule;
 	}
 	
-	public void setLectureSchedule(Schedule lectureSchedule) {
+	public final void setLectureSchedule(Schedule lectureSchedule) {
 		this.lectureSchedule = lectureSchedule;
 	}
 	
-	public Schedule getExerciseSchedule() {
+	public final Schedule getExerciseSchedule() {
 		return exerciseSchedule;
 	}
 	
-	public void setExerciseSchedule(Schedule exerciseSchedule) {
+	public final void setExerciseSchedule(Schedule exerciseSchedule) {
 		exerciseSchedule = exerciseSchedule;
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -167,19 +152,12 @@ public final class Subject implements Comparable<Subject>
 	//
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// File-Operators
 	//
-	public final String writeToText(Separators separator){
+	public final String writeToText(Separators separator) {
 		
-		if(separator == Separators.UNDEFINED){
+		if (separator == Separators.UNDEFINED) {
 			System.out.println("Maximum depth reached.");
 			return "";
 		}
@@ -199,17 +177,17 @@ public final class Subject implements Comparable<Subject>
 		stringBuilder.append(subjectDescription + separator.getCharacter());
 		
 		//OpisPredmeta ARG #4
-		stringBuilder.append(professor + separator.getCharacter());
+		stringBuilder.append(professor.writeToText(separator.next()) + separator.getCharacter());
 		
 		//OpisPredmeta ARG #5
-		stringBuilder.append(assistent + separator.getCharacter());
+		stringBuilder.append(assistent.writeToText(separator.next()) + separator.getCharacter());
 		
 		//OpisPredmeta ARG #XX
-		//stringBuilder.append(labAssistent + separator.getCharacter());
+		//stringBuilder.append(labAssistent.writeToText(separator.getNextSeparator()) + separator.getCharacter());
 		
 		//OpisPredmeta ARG #6
-		for(WebLink webLink : webLinks){
-			stringBuilder.append(webLink + separator.getNextSeparator().getCharacter());
+		for (WebLink webLink : webLinks) {
+			stringBuilder.append(webLink.writeToText(separator.next().next()) + separator.next().getCharacter());
 		}
 		
 		//OpisPredmeta ARG #7
@@ -219,25 +197,25 @@ public final class Subject implements Comparable<Subject>
 		stringBuilder.append(semesterId + separator.getCharacter());
 		
 		//OpisPredmeta ARG #9
-		stringBuilder.append(lectureSchedule.writeToText(separator.getNextSeparator()) + separator.getCharacter());
+		stringBuilder.append(lectureSchedule.writeToText(separator.next()) + separator.getCharacter());
 		
 		//OpisPredmeta ARG #10
-		stringBuilder.append(exerciseSchedule.writeToText(separator.getNextSeparator()) + separator.getCharacter());
+		stringBuilder.append(exerciseSchedule.writeToText(separator.next()) + separator.getCharacter());
 		
 		return stringBuilder.toString();
 	}
 	
-	public final Subject readFromText(String line, Separators separator){
+	public final Subject readFromText(String line, Separators separator) {
 		
-		if(separator == Separators.UNDEFINED){
+		if (separator == Separators.UNDEFINED) {
 			System.out.println("Maximum depth reached.");
 			return this;
 		}
 		
-		String[] inputArray = line.split( separator.getCharacter() );
+		String[] inputArray = line.split(separator.getCharacter());
 		
-		if(inputArray.length < 11) {
-			System.out.print("Error - bad [PREDMET] line-length-input. ");
+		if (inputArray.length < 11) {
+			System.out.print("Error - bad [Subject] line-length-input. ");
 		}
 		
 		
@@ -254,18 +232,18 @@ public final class Subject implements Comparable<Subject>
 		this.subjectDescription = inputArray[3];
 		
 		// ARG #4
-		this.professor = new Person().readFromText(inputArray[4], separator.getNextSeparator());
+		this.professor = new Person().readFromText(inputArray[4], separator.next());
 		
 		// ARG #5
-		this.assistent = new Person().readFromText(inputArray[5], separator.getNextSeparator());
+		this.assistent = new Person().readFromText(inputArray[5], separator.next());
 		
 		//OpisPredmeta ARG #XX
 		//stringBuilder.append(labAssistent + separator.getCharacter());
 		
 		// ARG #6
-		String[] webLinkArray = inputArray[6].split( separator.getNextSeparator().getCharacter() );
-		for(String string : webLinkArray){
-			this.webLinks.add(new WebLink(string));
+		String[] webLinkArray = inputArray[6].split(separator.next().getCharacter());
+		for (String string : webLinkArray) {
+			this.webLinks.add(new WebLink().readFromText(string, separator.next()));
 		}
 		
 		// ARG #7
@@ -277,13 +255,14 @@ public final class Subject implements Comparable<Subject>
 		this.semesterId = testValue > 0 ? testValue : 0;
 		
 		// ARG #9
-		this.lectureSchedule = new Schedule().readFromText(inputArray[9], separator.getNextSeparator());
+		this.lectureSchedule = new Schedule().readFromText(inputArray[9], separator.next());
 		
 		// ARG #10
-		this.exerciseSchedule = new Schedule().readFromText(inputArray[10], separator.getNextSeparator());
+		this.exerciseSchedule = new Schedule().readFromText(inputArray[10], separator.next());
 		
 		return this;
 	}
+	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Overrides
@@ -293,8 +272,12 @@ public final class Subject implements Comparable<Subject>
 		return SubjectLongName;
 	}
 	
+	/**
+	 * @param subject
+	 * @returns int comparison based on Semester ID value
+	 */
 	@Override
-	public final int compareTo(Subject o) {
-		return Integer.valueOf(semesterId).compareTo(o.getSemesterId());
+	public final int compareTo(Subject subject) {
+		return Integer.valueOf(this.semesterId).compareTo(subject.getSemesterId());
 	}
 }

@@ -2,19 +2,15 @@ package models;
 
 import core.Configs;
 import core.Patterns;
+import models.statics.Separators;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class WebLink {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variables
 	//
 	private String webLink;
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -27,32 +23,28 @@ public final class WebLink {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Constructor for an EXISTING WebLink
 	//
-	public WebLink(String webLink
-	) {
+	public WebLink(String webLink) {
 		this();
 		
-		if( !(webLink.isBlank() && webLink.length() < Configs.MAX_LINK_LENGTH && !isValidURL(webLink) ) ){
+		if (!(webLink.isBlank() && webLink.length() < Configs.MAX_LINK_LENGTH && !isValidURL(webLink))) {
 			this.webLink = webLink;
-		}
-		else {
+		} else {
 			this.webLink = "";
 			System.out.println("Invalid URL created!");
 		}
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Basic public methods
 	//
-	public String getWebLink() {
+	public final String getWebLink() {
 		return webLink;
 	}
 	
-	public void setWebLink(String webLink) {
+	public final void setWebLink(String webLink) {
 		this.webLink = webLink;
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -62,7 +54,37 @@ public final class WebLink {
 		Matcher matcher = Patterns.WEB_URL.matcher(webStr);
 		return matcher.find();
 	}
-
+	
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// File-Operators
+	//
+	public final String writeToText(Separators separator) {
+		if (separator == Separators.UNDEFINED) {
+			System.out.println("Maximum depth reached.");
+			return Configs.SINGLE_SPACE;
+		}
+		
+		return webLink;
+	}
+	
+	
+	public final WebLink readFromText(String line, Separators separator) {
+		if (separator == Separators.UNDEFINED) {
+			System.out.println("Maximum depth reached.");
+			return this;
+		}
+		
+		// ARG #0
+		if (isValidURL(line)) {
+			this.webLink = line;
+		} else {
+			System.out.println("Invalid WebLink.");
+			this.webLink = Configs.SINGLE_SPACE;
+		}
+		
+		return this;
+	}
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -70,6 +92,7 @@ public final class WebLink {
 	//
 	@Override
 	public final String toString() {
+		if (webLink.contains("//")) return webLink.split("//")[1];
 		return webLink;
 	}
 }

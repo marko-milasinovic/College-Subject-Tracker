@@ -1,20 +1,12 @@
 package models.statics;
 
-public enum Separators
-{
+public enum Separators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variable instances
 	//
-	FIRST(1, ";"),
-	SECOND(2, "_" ),
-	THIRD(3, "~"),
-	FOURTH(4, "\\"),
-	FIFTH(5, "="),
-	SIXTH(6, "@"),
-	SEVENTH(7, "&"),
+	FIRST(1, ";"), SECOND(2, "_"), THIRD(3, "~"), FOURTH(4, "\\"), FIFTH(5, "="), SIXTH(6, "@"), SEVENTH(7, "&"),
 	
 	UNDEFINED(-1, "-");
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -24,18 +16,13 @@ public enum Separators
 	private final String character;
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Main constructor
 	//
-	Separators(
-			int id,
-			String character
-	) {
+	Separators(int id, String character) {
 		this.character = character;
 		this.id = id;
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -49,14 +36,12 @@ public enum Separators
 		return id;
 	}
 	
-	public final Separators getNextSeparator() {
-		return getFromId(id+1);
+	public final Separators next() {
+		return getFromId(id + 1);
 	}
 	
-	public static final Separators getFromId(int num)
-	{
-		switch(num)
-		{
+	public static final Separators getFromId(int num) {
+		switch (num) {
 			case 1:
 				return FIRST;
 			case 2:
@@ -78,12 +63,10 @@ public enum Separators
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Overrides
 	//
-	public static final Separators readFromString(String string)
-	{
+	public static final Separators readFromString(String string) {
 		Separators oblast = EnumUtils.getEnumFromString(Separators.class, string);
 		
 		return oblast == null ? Separators.UNDEFINED : oblast;

@@ -15,46 +15,39 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class Utilities
-{
+public final class Utilities {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// JavaFX popup error screen
 	//
-	public static void sendError( String message1 )
-	{
+	public static void sendError(String message1) {
 		//message1 = Objects.requireNonNull(message1, "Must not be null");
 		
-		Alert alert =  new Alert( Alert.AlertType.ERROR, message1 );
+		Alert alert = new Alert(Alert.AlertType.ERROR, message1);
 		
-		((Stage) alert.getDialogPane().getScene().getWindow()
-		).setAlwaysOnTop(true);
+		((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		
 		alert.setTitle(" ");
 		alert.setGraphic(getImageView("icons/error3.png"));
 		alert.setHeaderText("Došlo je do greške!");
 		
-		((Stage) alert.getDialogPane().getScene().getWindow()
-		).getIcons().add(new Image(UtilsFX.getFileStream("icons/messageSent.png")));
+		((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image(UtilsFX.getFileStream("icons/messageSent.png")));
 		
 		alert.show();
 	}
 	
-	public static void sendConfirmation( String message1 )
-	{
+	public static void sendConfirmation(String message1) {
 		//message1 = Objects.requireNonNull(message1, "Must not be null");
 		
-		Alert alert =  new Alert( Alert.AlertType.INFORMATION, message1 );
+		Alert alert = new Alert(Alert.AlertType.INFORMATION, message1);
 		
-		((Stage) alert.getDialogPane().getScene().getWindow()
-		).setAlwaysOnTop(true);
+		((Stage) alert.getDialogPane().getScene().getWindow()).setAlwaysOnTop(true);
 		
 		
 		alert.setTitle(" ");
 		alert.setGraphic(getImageView("icons/confirm.png"));
 		alert.setHeaderText("Uspešno izvršeno!");
 		
-		((Stage) alert.getDialogPane().getScene().getWindow()
-		).getIcons().add(new Image(UtilsFX.getFileStream("icons/messageSent.png")));
+		((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image(UtilsFX.getFileStream("icons/messageSent.png")));
 		
 		alert.show();
 	}
@@ -63,8 +56,7 @@ public final class Utilities
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Time helpers
 	//
-	public static final String getCurrentTimeOfDay()
-	{
+	public static final String getCurrentTimeOfDay() {
 		SimpleDateFormat formatter = new SimpleDateFormat(Configs.DATE_TIME_FORMAT);
 		Date date = new Date();
 		return formatter.format(date);
@@ -102,6 +94,10 @@ public final class Utilities
 		return (getCurrentDayOfWeek().getPosition() * 1440) + LocalDateTime.now().getHour() * 60 + LocalDateTime.now().getMinute();
 	}
 	
+	public static final int getCurrentMinutesFromDayStart() {
+		return LocalDateTime.now().getHour() * 60 + LocalDateTime.now().getMinute();
+	}
+	
 	public static final int getDaysFromWeekStart() {
 		return (getCurrentDayOfWeek().getPosition() * 1440);
 	}
@@ -111,8 +107,34 @@ public final class Utilities
 	}
 	
 	
+	/**
+	 * Converts String to upper-case and underscore basic ascii characters
+	 *
+	 * @param string is null safe and empty -safe
+	 * @return clean string OR "-" if something went wrong
+	 */
+	private static String cleanString(String string) {
+		if (!(string != null && !string.isEmpty())) {
+			return "-";
+		}
+		
+		return string.trim().toUpperCase().replaceAll("Č", "C").replaceAll("Ć", "C").replaceAll("Š", "S").replaceAll("Ž", "Z").replaceAll("Đ", "DJ").replaceAll(" ", "_").replaceAll("[^A-Z_]", "");
+	}
 	
-
+	public static boolean isInt(String string1) {
+		if (string1.length() == string1.replaceAll("[^0-9]", "").length()) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public static boolean isDouble(String string1) {
+		if (string1.length() == string1.replaceAll("[^0-9.-]", "").length()) {
+			return true;
+		}
+		return false;
+	}
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Validation methods
@@ -123,17 +145,16 @@ public final class Utilities
 		Matcher matcher = VALID_TEXT_REGEX.matcher(emailStr);
 		return matcher.find();
 	}
-
-
+	
+	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// The all powerfull GC
 	//
-	public static void gc()
-	{
+	public static void gc() {
 		Object obj = new Object();
 		WeakReference<Object> ref = new WeakReference<Object>(obj);
 		obj = null;
-		while(ref.get() != null) {
+		while (ref.get() != null) {
 			System.gc();
 		}
 	}
@@ -141,8 +162,7 @@ public final class Utilities
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Image manipulation
 	//
-	private static ImageView getImageView(String fileName)
-	{
+	private static ImageView getImageView(String fileName) {
 		Image openIcon = UtilsFX.getImage(fileName, 100, 100);
 		
 		ImageView openView = new ImageView(openIcon);
@@ -153,6 +173,45 @@ public final class Utilities
 	}
 	
 	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// Number methods
+	//
+	public static final Integer convertToInt(String line) {
+		try {
+			return Integer.valueOf(line);
+		}
+		catch (NumberFormatException exception) {
+			System.out.println("Exception while parsing int" + exception.getLocalizedMessage());
+			return 0;
+		}
+	}
+	
+	public static final String convertToHourFormat(int time) {
+		int h = time / 60;
+		int m = time % 60;
+		
+		
+		char[] htime = new char[2];
+		if (h < 10) {
+			htime[0] = '0';
+			htime[1] = (char) (h + '0');
+		} else {
+			htime[0] = (char) (h / 10 + '0');
+			htime[1] = (char) (h % 10 + '0');
+		}
+		
+		char[] mtime = new char[2];
+		if (m < 10) {
+			mtime[0] = '0';
+			mtime[1] = (char) (m + '0');
+		} else {
+			mtime[0] = (char) (m / 10 + '0');
+			mtime[1] = (char) (m % 10 + '0');
+		}
+		
+		return String.valueOf(htime) + ":" + String.valueOf(mtime);
+		//return htime + ":" + mtime;
+	}
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

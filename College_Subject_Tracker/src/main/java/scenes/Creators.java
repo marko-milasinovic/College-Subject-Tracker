@@ -15,7 +15,7 @@ class Creators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// ComboBox
 	//
-	protected static final ComboBox createComboBox(){
+	protected static final ComboBox createComboBox() {
 		ComboBox comboBox = new ComboBox();
 		comboBox.setEditable(false);
 		comboBox.setMaxWidth(200);
@@ -25,11 +25,10 @@ class Creators {
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// TextField
 	//
-	protected static final TextField createTextField(boolean editable){
+	protected static final TextField createTextField(boolean editable) {
 		TextField textField = new TextField();
 		textField.setAlignment(Pos.BASELINE_LEFT);
 		textField.setPrefWidth(150);
@@ -43,7 +42,7 @@ class Creators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// TextField
 	//
-	protected static final TextArea createTextArea(boolean editable){
+	protected static final TextArea createTextArea(boolean editable) {
 		TextArea textArea = new TextArea();
 		textArea.setWrapText(true);
 		textArea.setPrefWidth(150);
@@ -54,18 +53,17 @@ class Creators {
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// VBox
 	//
-	protected static final VBox createVBox(){
+	protected static final VBox createVBox() {
 		VBox vBox = new VBox(5);
 		vBox.setAlignment(Pos.CENTER);
 		
 		return vBox;
 	}
 	
-	protected static final VBox createVBox(Collection<Node> nodes){
+	protected static final VBox createVBox(Collection<Node> nodes) {
 		VBox vBox = new VBox(5);
 		vBox.setAlignment(Pos.CENTER);
 		vBox.getChildren().addAll(nodes);
@@ -73,17 +71,16 @@ class Creators {
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// HBox
 	//
-	protected static final HBox createHBox(){
+	protected static final HBox createHBox() {
 		HBox hBox = new HBox(10);
 		hBox.setAlignment(Pos.CENTER);
 		return hBox;
 	}
 	
-	protected static final HBox createHBox(Collection<Node> nodes){
+	protected static final HBox createHBox(Collection<Node> nodes) {
 		HBox hBox = new HBox(10);
 		hBox.setAlignment(Pos.CENTER);
 		hBox.getChildren().addAll(nodes);
@@ -92,11 +89,10 @@ class Creators {
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Label
 	//
-	protected static final Label createLabel(){
+	protected static final Label createLabel() {
 		Label lbl = new Label();
 		lbl.setAlignment(Pos.BASELINE_LEFT);
 		lbl.setMaxWidth(500);
@@ -105,7 +101,7 @@ class Creators {
 		return lbl;
 	}
 	
-	protected static final Label createLabel(String text){
+	protected static final Label createLabel(String text) {
 		Label lbl = new Label(text);
 		lbl.setAlignment(Pos.BASELINE_LEFT);
 		lbl.setMaxWidth(500);
@@ -118,7 +114,7 @@ class Creators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Button
 	//
-	protected static final Button createButton(String name){
+	protected static final Button createButton(String name) {
 		Button btn = new Button(name);
 		//btn.setGraphic(UtilsFX.getImageView("icons/search2.png"));
 		UtilsFX.styleElement(btn);
@@ -126,7 +122,7 @@ class Creators {
 		return btn;
 	}
 	
-	protected static final Button createButton(String name, String imagePath){
+	protected static final Button createButton(String name, String imagePath) {
 		Button btn = new Button(name);
 		//btn.setGraphic(UtilsFX.getImageView(imagePath));
 		UtilsFX.styleElement(btn);
@@ -138,8 +134,7 @@ class Creators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Complete VBox
 	//
-	protected static final void makeVBoxComplete(VBox complete, HBox top)
-	{
+	protected static final void makeVBoxComplete(VBox complete, HBox top) {
 		complete.setAlignment(Pos.CENTER);
 		complete.setPadding(new Insets(20, 20, 20, 5));
 		complete.getChildren().addAll(top);
@@ -147,18 +142,15 @@ class Creators {
 		//UtilsFX.changeBackground("", complete);
 	}
 	
-	protected static final void makeVBoxComplete(VBox complete, HBox top, HBox middle)
-	{
+	protected static final void makeVBoxComplete(VBox complete, HBox top, HBox middle) {
 		makeVBoxComplete(complete, top);
 		complete.getChildren().addAll(middle);
 	}
 	
-	protected static final void makeVBoxComplete(VBox complete, HBox top, HBox middle, HBox bottom)
-	{
+	protected static final void makeVBoxComplete(VBox complete, HBox top, HBox middle, HBox bottom) {
 		makeVBoxComplete(complete, top, middle);
 		complete.getChildren().addAll(bottom);
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
