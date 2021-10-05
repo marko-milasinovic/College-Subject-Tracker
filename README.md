@@ -46,7 +46,7 @@ Supported Languages: English
 * Google's [Guava](https://mvnrepository.com/artifact/com.google.guava/guava) - a suite of core and expanded libraries that include utility classes, Google's collections, I/O classes
 
 ## License
-Code licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
+Code licensed under [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
 
-### Attribution
-Icons licensed separately by Freepik from www.flaticon.com
+### Credits
+Some icons are licensed separately by Freepik from www.flaticon.com
