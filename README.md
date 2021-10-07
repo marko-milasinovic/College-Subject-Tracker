@@ -1,5 +1,15 @@
-# College-Subject-Tracker
-An offline java application for tracking the time and date of lectures and other subject specific info throughout the semester
+
+<h2 align="center"> College Subject Tracker </h2> 
+
+<h3 align="center"> Offline java application for tracking the time of lectures and other subject specific info throughout the semester </h3>
+
+<p align="center">
+<img src="https://img.shields.io/badge/Support-Windows%20x64-blue?logo=Windows&style=flat-square">
+<img src="https://img.shields.io/github/license/marko-milasinovic/College-Subject-Tracker?style=flat-square">
+</p>
+
+# [💾Download Latest Stable Build](https://github.com/marko-milasinovic/College-Subject-Tracker/releases)
+Supported Languages: English
 
 ## Built and run with
 * [Maven](https://mvnrepository.com/artifact/org.openjfx/javafx/16)
@@ -9,9 +19,9 @@ An offline java application for tracking the time and date of lectures and other
 ## Project core release status
 - [ ] Main subject viewer screen (Main view screen, where the user can look at all subjects)
     - [ ] Auto updated current subject information
-    - [ ] Coloured current day's subjects in table
+    - [x] Coloured current day's subjects in table
 - [x] Read data from file
-    - [ ] Write data to file
+    - [x] Write data to file
 - [x] Data models
     - [x] Framework for data manipulation
 - [ ] Improved design (e.g. icons)
@@ -28,7 +38,7 @@ An offline java application for tracking the time and date of lectures and other
 - [x] Physical monitor resolution dependant scaling / scrolling
 
 ## Main subject viewer screen
-![Subject viewer screen_todo](/assets/subject_viewer_screen.png)
+![Main viewer screen](/assets/cst_main_view_screen.png)
 
 ## Dependencies
 * OpenJFX [JavaFX 16](https://mvnrepository.com/artifact/org.openjfx/javafx/16)
@@ -36,4 +46,7 @@ An offline java application for tracking the time and date of lectures and other
 * Google's [Guava](https://mvnrepository.com/artifact/com.google.guava/guava) - a suite of core and expanded libraries that include utility classes, Google's collections, I/O classes
 
 ## License
-Licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
+Code licensed under [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)
+
+### Credits
+Some icons are licensed separately by Freepik from www.flaticon.com
