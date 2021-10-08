@@ -12,6 +12,16 @@ public enum DayOfWeek {
 	private final String localisedName;
 	private final int position;
 	
+	public static final List<DayOfWeek> VALID_VALUES = new ArrayList<>() {{
+		add(MONDAY);
+		add(TUESDAY);
+		add(WEDNESDAY);
+		add(THURSDAY);
+		add(FRIDAY);
+		add(SATURDAY);
+		add(SUNDAY);
+	}};
+	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Main constructor

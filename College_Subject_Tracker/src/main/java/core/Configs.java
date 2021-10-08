@@ -1,7 +1,9 @@
 package core;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public final class Configs {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -29,6 +31,41 @@ public final class Configs {
 	
 	public static final String SAVE_FILE_FOLDER_NAME = ".college_subject_tracker";
 	public static final String SAVE_FILE_JAR_NAME = "college_subject_tracker.jar";
+	
+	public static final List<String> LESSON_COUNT_CHOICES = new ArrayList<>() {{
+		add("1");
+		add("2");
+		add("3");
+		add("4");
+		add("5");
+		add("6");
+	}};
+	public static final List<String> SEMESTER_ID_CHOICES = new ArrayList<>() {{
+		add("1");
+		add("2");
+		add("3");
+		add("4");
+		add("5");
+		add("6");
+		add("7");
+		add("8");
+		add("9");
+		add("10");
+		add("11");
+		add("12");
+	}};
+	public static final List<String> SEMESTER_MAX_ESPB_CHOICES = new ArrayList<>() {{
+		add("1");
+		add("2");
+		add("3");
+		add("4");
+		add("5");
+		add("6");
+		add("7");
+		add("8");
+		add("9");
+		add("10");
+	}};
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

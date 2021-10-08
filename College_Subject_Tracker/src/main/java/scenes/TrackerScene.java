@@ -92,8 +92,7 @@ public final class TrackerScene extends BorderPane {
 		
 		//addTooltips();
 		
-		ScrollPane scrollPane = Creators.createScrollPane(vb_Complete);
-		this.setCenter(scrollPane);
+		this.setCenter(Creators.createScrollPane(vb_Complete));
 	}
 	
 	

@@ -3,32 +3,29 @@ package repositories.subject;
 
 import core.Configs;
 import models.Subject;
+import models.statics.Separators;
 import org.apache.commons.io.FileUtils;
 import oshi.SystemInfo;
 import repositories.InMemoryAbstractRepository;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public final class InMemorySubjectRepository extends InMemoryAbstractRepository implements ISubjectRepository{
+public final class InMemorySubjectRepository extends InMemoryAbstractRepository implements ISubjectRepository {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Static variables
 	//
 	private static final List<Subject> subjects = new CopyOnWriteArrayList<>();
 	
-
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Main constructor
 	//
-	public InMemorySubjectRepository()
-	{
+	public InMemorySubjectRepository() {
 		try {
 		
-			
+		
 		}
 		catch (Exception err) {
 			System.out.println(err.getLocalizedMessage());
@@ -36,13 +33,23 @@ public final class InMemorySubjectRepository extends InMemoryAbstractRepository 
 	}
 	
 	
-	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Methods
 	//
-	public List<Subject> all() {
-		if ( !(subjects != null && !subjects.isEmpty()) ){
+	public final Subject getSubject(UUID uuid) {
+		ListIterator<Subject> iterator = subjects.listIterator();
+		
+		while (iterator.hasNext()) {
+			Subject subject = iterator.next();
+			if (subject.getUuid().equals(uuid)) return subject;
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public final List<Subject> all() {
+		if (!(subjects != null && !subjects.isEmpty())) {
 			return null;
 		}
 		
@@ -51,39 +58,39 @@ public final class InMemorySubjectRepository extends InMemoryAbstractRepository 
 			subjectList.add(e);
 		});
 		
-		return Collections.unmodifiableList(subjectList);
-		//for easier testing
-		//return subjectList;
+		return subjectList;
 	}
 	
 	@Override
-	public List<Subject> getSubjects() {
-		if ( !(subjects != null && !subjects.isEmpty()) ){
-			return null;
-		}
-		return subjects;
-	}
-	
-	@Override
-	public Subject addSubject(Subject subject) {
+	public final Subject addSubject(Subject subject) {
 		subjects.add(subject);
 		return subject;
 	}
 	
 	@Override
-	public boolean deleteSubject(Integer id) {
-		return subjects.remove(id);
+	public final void deleteSubject(UUID uuid) {
+		subjects.iterator().forEachRemaining(e -> {
+			if (e.getUuid() == uuid) {
+				subjects.remove(e);
+			}
+		});
 	}
 	
-	
-	
-	
+	@Override
+	public final Subject editSubject(Subject subject) {
+		if (!(subjects != null && !subjects.isEmpty())) {
+			return null;
+		}
+		
+		Subject originalSubject = getSubject(subject.getUuid());
+		
+		if (originalSubject == null) {
+			return null;
+		}
+		
+		originalSubject.readFromText(subject.writeToText(Separators.FIRST), Separators.FIRST);
+		
+		return subject;
+	}
 	
 }
-//protected static Collection<Path> find(String fileName, String searchDirectory) throws IOException {
-//		try (Stream<Path> files = Files.walk(Paths.get(searchDirectory))) {
-//			return files.filter(f -> f.getFileName().toString().equals(fileName))
-//					.collect(Collectors.toList());
-//
-//		}
-//	}

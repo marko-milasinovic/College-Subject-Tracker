@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-//https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java?rq=1
 public final class Subject implements Comparable<Subject> {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variables
@@ -148,8 +147,15 @@ public final class Subject implements Comparable<Subject> {
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	// Advanced public methods
+	// JavaFX table methods
 	//
+	public final String getLectureScheduleString() {
+		return lectureSchedule.toString();
+	}
+	
+	public final String getExerciseScheduleString() {
+		return exerciseSchedule.toString();
+	}
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -189,6 +195,7 @@ public final class Subject implements Comparable<Subject> {
 		for (WebLink webLink : webLinks) {
 			stringBuilder.append(webLink.writeToText(separator.next().next()) + separator.next().getCharacter());
 		}
+		stringBuilder.append(separator.getCharacter());
 		
 		//OpisPredmeta ARG #7
 		stringBuilder.append(maxEspb + separator.getCharacter());

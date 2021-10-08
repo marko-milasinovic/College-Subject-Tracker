@@ -8,8 +8,9 @@ public interface ISubjectRepository {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Abstract methods
 	//
-	public List<Subject> getSubjects();
+	public List<Subject> all();
+	public Subject getSubject(UUID uuid);
+	public void deleteSubject(UUID uuid);
 	public Subject addSubject(Subject subject);
-	//public Subject editSubject(Subject subject);
-	public boolean deleteSubject(Integer id);
+	public Subject editSubject(Subject subject);
 }
