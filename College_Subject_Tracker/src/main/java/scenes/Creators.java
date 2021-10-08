@@ -4,6 +4,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import scenes.statics.UtilsFX;
@@ -45,7 +48,8 @@ class Creators {
 	protected static final TextArea createTextArea(boolean editable) {
 		TextArea textArea = new TextArea();
 		textArea.setWrapText(true);
-		textArea.setPrefWidth(150);
+		textArea.setMinWidth(150);
+		textArea.setPrefWidth(300);
 		textArea.setEditable(editable);
 		textArea.setFocusTraversable(editable);
 		
@@ -54,10 +58,32 @@ class Creators {
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// ScrollPane
+	//
+	protected static final ScrollPane createScrollPane(Node node) {
+		ScrollPane scrollPane = new ScrollPane(node);
+		scrollPane.setFitToHeight(true);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setMinWidth(100);
+		scrollPane.setMinHeight(100);
+		scrollPane.setPadding(new Insets(10, 10, 10, 10));
+		
+		return scrollPane;
+	}
+	
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// VBox
 	//
 	protected static final VBox createVBox() {
 		VBox vBox = new VBox(5);
+		vBox.setAlignment(Pos.CENTER);
+		
+		return vBox;
+	}
+	
+	protected static final VBox createVBox(int separation) {
+		VBox vBox = new VBox(separation);
 		vBox.setAlignment(Pos.CENTER);
 		
 		return vBox;
@@ -115,19 +141,38 @@ class Creators {
 	// Button
 	//
 	protected static final Button createButton(String name) {
-		Button btn = new Button(name);
-		//btn.setGraphic(UtilsFX.getImageView("icons/search2.png"));
-		UtilsFX.styleElement(btn);
+		Button button = new Button(name);
+		button.setMinWidth(80);
+		//button.getParent().layout();	//needs to be done as final part of button creation
+		//button.getParent().applyCss();
+		button.setWrapText(false);
+		UtilsFX.styleElement(button);
+		button.setMaxWidth(Control.USE_PREF_SIZE);
 		
-		return btn;
+		return button;
 	}
 	
-	protected static final Button createButton(String name, String imagePath) {
-		Button btn = new Button(name);
-		//btn.setGraphic(UtilsFX.getImageView(imagePath));
-		UtilsFX.styleElement(btn);
+	protected static final Button createButton(String name, Image image) {
+		Button button = createButton(name);
 		
-		return btn;
+		if (image != null) {
+			button.setGraphic(new ImageView(image));
+		}
+		return button;
+	}
+	
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// GridPane
+	//
+	protected static final GridPane makeGridPane() {
+		GridPane gridPane = new GridPane();
+		gridPane.setVgap(10);
+		gridPane.setHgap(20);
+		gridPane.setPadding(new Insets(10, 10, 10, 10));
+		gridPane.setAlignment(Pos.CENTER);
+		
+		return gridPane;
 	}
 	
 	

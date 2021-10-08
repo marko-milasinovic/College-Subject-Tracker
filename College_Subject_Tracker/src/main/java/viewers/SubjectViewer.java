@@ -11,71 +11,32 @@ public abstract class SubjectViewer {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Methods
 	//
-	public static final ScheduleStatus getSubjectLectureStatus(Subject subject, DayOfWeek dayOfWeek, int time) {
-		if(subject.getLectureSchedule() == null){
+	public static final ScheduleStatus getSubjectScheduleStatus(Schedule schedule, DayOfWeek dayOfWeek, int time) {
+		if(schedule == null){
 			return ScheduleStatus.PASSED_NOT_TODAY;
 		}
 		
 		int minDayTime = dayOfWeek.getDayOfWeekConversion();
 		int maxDayTime = dayOfWeek.getDayOfWeekConversion() + DayOfWeek.MONDAY.getDayOfWeekConversion() - 1;
 		
-		int testLecTime = subject.getLectureSchedule().getDayOfWeek().getDayOfWeekConversion();
-		
-		boolean noLectures = false;
+		int testLecTime = schedule.getDayOfWeek().getDayOfWeekConversion();
 		
 		if (testLecTime < minDayTime || testLecTime > maxDayTime) {
-			noLectures = true;
-		}
-		if (noLectures) {
 			return ScheduleStatus.PASSED_NOT_TODAY;
 		}
 		
-		if (!noLectures) {
-			if (time < subject.getLectureSchedule().getStartTime()) {
-				return ScheduleStatus.UPCOMING_TODAY;
-			} else if (time > subject.getLectureSchedule().getEndTime()) {
-				return ScheduleStatus.PASSED_TODAY;
-			}
-			return ScheduleStatus.IN_PROGRESS;
+		if (time < schedule.getStartTime()) {
+			return ScheduleStatus.UPCOMING_TODAY;
+		} else if (time > schedule.getEndTime()) {
+			return ScheduleStatus.PASSED_TODAY;
 		}
-		
-		return ScheduleStatus.PASSED_NOT_TODAY;
+		return ScheduleStatus.IN_PROGRESS;
 	}
 	
-	public static final ScheduleStatus getSubjectExerciseStatus(Subject subject, DayOfWeek dayOfWeek, int time) {
-		if(subject.getExerciseSchedule() == null){
-			return ScheduleStatus.PASSED_NOT_TODAY;
-		}
-		
-		int minDayTime = dayOfWeek.getDayOfWeekConversion();
-		int maxDayTime = dayOfWeek.getDayOfWeekConversion() + DayOfWeek.MONDAY.getDayOfWeekConversion() - 1;
-		
-		int testLecTime = subject.getExerciseSchedule().getDayOfWeek().getDayOfWeekConversion();
-		
-		boolean noExercise = false;
-		
-		if (testLecTime < minDayTime || testLecTime > maxDayTime) {
-			noExercise = true;
-		}
-		if (noExercise) {
-			return ScheduleStatus.PASSED_NOT_TODAY;
-		}
-		
-		if (!noExercise) {
-			if (time < subject.getExerciseSchedule().getStartTime()) {
-				return ScheduleStatus.UPCOMING_TODAY;
-			} else if (time > subject.getExerciseSchedule().getEndTime()) {
-				return ScheduleStatus.PASSED_TODAY;
-			}
-			return ScheduleStatus.IN_PROGRESS;
-		}
-		
-		return ScheduleStatus.PASSED_NOT_TODAY;
-	}
 	
 	public static final ScheduleStatus getSubjectStatus(Subject subject, DayOfWeek dayOfWeek, int time) {
-		ScheduleStatus lectureStatus = getSubjectLectureStatus(subject, dayOfWeek, time);
-		ScheduleStatus exerciseStatus = getSubjectExerciseStatus(subject, dayOfWeek, time);
+		ScheduleStatus lectureStatus = getSubjectScheduleStatus(subject.getLectureSchedule(), dayOfWeek, time);
+		ScheduleStatus exerciseStatus = getSubjectScheduleStatus(subject.getExerciseSchedule(), dayOfWeek, time);
 		
 		//if any is in progress return in progress
 		if(lectureStatus == ScheduleStatus.IN_PROGRESS || exerciseStatus == ScheduleStatus.IN_PROGRESS){

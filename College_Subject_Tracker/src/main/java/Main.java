@@ -23,9 +23,9 @@ public class Main extends Application {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Variables
     //
-    private static Stage window;
-    public static ISubjectRepository subjectRepository;
-    public static IImageRepository imageRepository;
+    private static Stage primaryStage;
+    private static ISubjectRepository subjectRepository;
+    private static IImageRepository imageRepository;
     
     private enum STARTUP_CONFIGURATION {VALID, INVALID};
     
@@ -36,28 +36,27 @@ public class Main extends Application {
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Main method
     //
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Thread.currentThread().setName("College Subject Tracker");
-    
-        if (getStartupConfiguration() == STARTUP_CONFIGURATION.INVALID) {
+        
+        if(getStartupConfiguration() == STARTUP_CONFIGURATION.INVALID){
             System.out.println("Invalid configuration, exiting program.");
             return;
-        }
-    
+        };
+        
         try {
             executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Configs.EXECUTOR_QUEUE_DEPTH * 2);
-        }
-        catch (Exception exception) {
+        }catch (Exception exception) {
             executor.awaitTermination(10, TimeUnit.SECONDS);
-            //Logger.getLogger(Main.class.getName()).log(null);
+            
             System.out.println("Terminated - College Subject Tracker treads");
         }
-    
+        
         subjectRepository = new InMemorySubjectRepository();
         imageRepository = new InMemoryImageRepository();
-    
+        
         fileOperators.FileUtils.loadFiles(subjectRepository);
-    
+        
         launch(args);
     }
     
@@ -67,27 +66,27 @@ public class Main extends Application {
     // Main Scene constructor
     //
     @Override
-    public void start(Stage primaryStage) {
-        try {
+    public void start(Stage primaryStage)
+    {
+        try
+        {
             //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
             
-            Main.window = primaryStage;
-            //window.getIcons().add(new Image(UtilsFX.getFileStream("icons/book-double.png")));
+            this.primaryStage = primaryStage;
+            primaryStage.getIcons().add(imageRepository.getImage("DOUBLE_BOOK"));
             
-            BorderPane bPane = new TrackerScene(window, subjectRepository, imageRepository, executor);
-            Scene scene = new Scene(bPane, ScreenResolution.SCALED_WIDTH, ScreenResolution.SCALED_HEIGHT);
-            //Scene scene = new Scene(new User_ShopSelection(), Configs.SCREEN_WIDTH, Configs.SCREEN_HEIGHT);
-            
+            BorderPane borderPane = new TrackerScene(primaryStage, subjectRepository, imageRepository, executor);
+            Scene primaryScene = new Scene(borderPane, ScreenResolution.SCALED_WIDTH, ScreenResolution.SCALED_HEIGHT);
             
             //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             
-            window.setScene(scene);
-            window.show();
+            primaryStage.setScene(primaryScene);
+            primaryStage.show();
             
             Utilities.gc();
         }
-        catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+        catch(Exception e) {
+            System.out.println( e.getLocalizedMessage() );
             e.printStackTrace();
         }
         
@@ -100,45 +99,49 @@ public class Main extends Application {
     }
     
     
+    
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Private methods
     //
-    private static final STARTUP_CONFIGURATION getStartupConfiguration() {
-        if (isUnsupportedSystem() == true) {
+    private static final STARTUP_CONFIGURATION getStartupConfiguration()
+    {
+        if(isUnsupportedSystem() == true){
             System.out.println("Unsupported system detected!");
             return STARTUP_CONFIGURATION.INVALID;
         }
         
-        if (Configs.initialiseConfigs() == false) {
+        if(Configs.initialiseConfigs() == false){
             System.out.println("Configuration couldn't be loaded!");
             return STARTUP_CONFIGURATION.INVALID;
         }
         
-        if (Configs.initialiseConfigs() == false) {
+        if(Configs.initialiseConfigs() == false){
             System.out.println("Configuration couldn't be loaded!");
             return STARTUP_CONFIGURATION.INVALID;
         }
         
-        if (MyFileUtils.createFileIfNotExists(Configs.FULL_SAVE_FILE_JAR_PATH) == false) {
+        if(MyFileUtils.createFileIfNotExists(Configs.FULL_SAVE_FILE_JAR_PATH) == false){
             System.out.println("File location couldn't be loaded!");
             return STARTUP_CONFIGURATION.INVALID;
         }
         
-        if (ScreenResolution.initialiseScreenResolution() == false) {
+        if(ScreenResolution.initialiseScreenResolution() == false){
             System.out.println("Screen resolution couldnt be loaded, starting with defaults!");
         }
         
         return STARTUP_CONFIGURATION.VALID;
     }
     
-    private static final boolean isUnsupportedSystem() {
+    private static final boolean isUnsupportedSystem(){
         SystemInfo si = new SystemInfo();
-        if (si.getOperatingSystem().getFamily() == "Windows") {
+        if(si.getOperatingSystem().getFamily() == "Windows")
+        {
             Configs.USER_DIRECTORY_PATH = FileUtils.getUserDirectoryPath();
-            if (!Configs.USER_DIRECTORY_PATH.isBlank()) {
+            if(!Configs.USER_DIRECTORY_PATH.isBlank()){
                 return false;
             }
-        } else {
+        }
+        else{
             //linux configuration code
         }
         return true;
