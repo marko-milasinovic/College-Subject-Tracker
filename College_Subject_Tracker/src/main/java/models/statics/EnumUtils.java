@@ -28,7 +28,7 @@ public final class EnumUtils {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Private methods
 	//
-	private static final Pattern CLEAN_ENUM = Pattern.compile("[^0-9A-Z_]",Pattern.CASE_INSENSITIVE);
+	private static final Pattern CLEAN_ENUM = Pattern.compile("[^0-9A-Z_]", Pattern.CASE_INSENSITIVE);
 	
 	private static final String cleanString(String string) {
 		int len = string.length();
@@ -36,7 +36,6 @@ public final class EnumUtils {
 		
 		return len == test.length() ? test.toUpperCase() : "";
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

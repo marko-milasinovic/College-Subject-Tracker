@@ -1,9 +1,13 @@
 package models.statics;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public enum DayOfWeek {
 	MONDAY("Ponedeljak", 1), TUESDAY("Utorak", 2), WEDNESDAY("Sreda", 3), THURSDAY("Četvrtak", 4), FRIDAY("Petak", 5), SATURDAY("Subota", 6), SUNDAY("Nedelja", 7),
 	
-	UNDEFINED("-", 0);
+	UNDEFINED("-", 8);
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

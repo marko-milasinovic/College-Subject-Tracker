@@ -1,6 +1,6 @@
 package fileOperators;
 
-import core.Utilities;
+import core.Configs;
 import models.Subject;
 import models.statics.Separators;
 import repositories.subject.ISubjectRepository;
@@ -9,147 +9,139 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
-import java.util.logging.Logger;
 
 final class SubjectOperators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// INVARIABLES
 	//
-	private static final String EMPTY_STRING = "";
 	private static final String SAVE_FILE_NAME = "src/main/resources/subjects.txt";
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// READ - methods
 	//
-	static final boolean loadElements(ISubjectRepository subjectRepository, Separators separator)
-	{
-		if( !FileUtils.isValidFile(SAVE_FILE_NAME) ) {
+	static final void readSubjects(ISubjectRepository subjectRepository, Separators separator) {
+		if (!FileUtils.isValidFile(SAVE_FILE_NAME)) {
 			System.out.println("Invalid file path chosen.");
-			return false;
+			return;
 		}
 		
-		Path path = Paths.get(SAVE_FILE_NAME).toAbsolutePath();
-		String filePath = path.toString();
+		if (subjectRepository == null) {
+			System.out.println("Unreachable subject repository.");
+			return;
+		}
 		
-		try
-		{
-			//File file = new File(filePath);
-			//FileInputStream fileInputStream = new FileInputStream(file);
-			//InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
-			//BufferedReader reader = new BufferedReader(inputStreamReader);
+		FileInputStream fileInputStream = null;
+		InputStreamReader inputStreamReader = null;
+		BufferedReader reader = null;
+		
+		try {
+			//create new file reader
+			File file = new File(SAVE_FILE_NAME);
+			if (!file.isFile()) {
+				return;
+			}
 			
-			FileReader fileReader = new FileReader(filePath);
-			BufferedReader reader = new BufferedReader(fileReader);
+			fileInputStream = new FileInputStream(file);
+			inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8); //previously "UTF-8"
+			reader = new BufferedReader(inputStreamReader);
 			
-			while(reader.ready()){	//while ( (line = reader.readLine()) != null )
+			String line;
+			
+			while (reader.ready()) {    //while ( (line = reader.readLine()) != null )
+				line = reader.readLine();
 				
-				Subject subject = new Subject().readFromText(reader.readLine(), separator);
+				Subject subject = new Subject().readFromText(line, separator);
 				
 				subjectRepository.addSubject(subject);
 			}
-			
-			reader.close();
-			
-			return true;
 		}
-		catch(Exception e) {
-			System.out.println("Greska u fajlu: " + e.getMessage() + e.getLocalizedMessage());
-			Utilities.sendError("Greska u fajlu: " + e.getMessage() + e.getLocalizedMessage());
-			Logger.getLogger(SubjectOperators.class.getName()).log(null);
-			return false;
+		catch (Exception e) {
+			System.out.println("Error while reading file: " + e.getMessage());
+		}
+		finally {
+			try {
+				fileInputStream.close();
+				inputStreamReader.close();
+				reader.close();
+			}
+			catch (IOException e) {
+				System.out.println("Error while reading file: " + e.getMessage());
+			}
 		}
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// WRITE - methods
 	//
-	static final void writeElementsXXX(Collection<Subject> elements, String fullFilePath, Separators s)
-	{
+	static final void writeSubjects(ISubjectRepository subjectRepository, Separators separator) {
+		if (!FileUtils.isValidFile(SAVE_FILE_NAME)) {
+			System.out.println("Invalid file path chosen.");
+			return;
+		}
+		
+		List<Subject> subjects = subjectRepository.all();
+		if (subjects == null) {
+			System.out.println("Empty subject repository.");
+			return;
+		}
+		
 		FileOutputStream fileOutputStream = null;
 		OutputStreamWriter outputStreamWriter = null;
 		Writer writer = null;
 		
-		try
-		{
-			/*
-			BufferedWriter bWriter = new BufferedWriter(
-					new FileWriter(filePath)
-				);
-			
-			writer = new PrintWriter( bWriter, true );
-			*/
-			//Path textFile = Paths.get("foo.txt");
-			//Files.write(textFile, lines, StandardCharsets.UTF_8);
-			
-			//List<String> read = Files.readAllLines(textFile, StandardCharsets.UTF_8);
-			
-			//OutputStreamWriter writer2 = new OutputStreamWriter(new FileOutputStream(PROPERTIES_FILE), StandardCharsets.UTF_8))
-			
-			
-			
+		try {
 			//create new file writer
-			fileOutputStream = new FileOutputStream(fullFilePath);
+			File file = new File(SAVE_FILE_NAME);
+			if (!file.isFile()) {
+				return;
+			}
+			
+			fileOutputStream = new FileOutputStream(file);
 			outputStreamWriter = new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8); //previously "UTF-8"
 			writer = new BufferedWriter(outputStreamWriter);
 			
 			//empty previous file
-			writer.write(EMPTY_STRING);
+			writer.write(Configs.EMPTY_STRING);
+			
+			//flush all outputs
 			fileOutputStream.flush();
 			outputStreamWriter.flush();
 			writer.flush();
 			
 			
+			char[] buffer = new char[FileUtils.WRITE_BUFFER_SIZE];
+			int size = 0;
 			
-			byte[] buffer = new byte[1024];
-			ByteArrayInputStream input = new ByteArrayInputStream(buffer, 0, buffer.length);
-			for (int length; (length = input.read(buffer)) != -1; ) {
-					//result.write(buffer, 0, length);
+			for (Subject subject : subjects) {
+				size = subject.writeToText(Separators.FIRST, buffer);
+				
+				for (int i = 0; i < size; i++) {
+					writer.write(buffer[i]);
+				}
+				writer.write("\n");
 			}
-			
-			//ByteArrayOutputStream result = new ByteArrayOutputStream();
-			//for (int length; (length = inputStream.read(buffer)) != -1; ) {
-			//	result.write(buffer, 0, length);
-			//}
-			// StandardCharsets.UTF_8.name() > JDK 7
-			//return result.toString("UTF-8");
-			
-			char[] writeChars = new char[256];
-			
-			
-			
-			for(Subject subject : elements){
-				//writer.append( subject.writeToText(writeChars));
-				writer.append(System.lineSeparator());
-			}
-			
 			
 			fileOutputStream.flush();
 			outputStreamWriter.flush();
 			writer.flush();
 		}
-		catch(Exception e) {
-			//Utils.sendError("Greska u fajlu: " + e.getMessage());
-			Logger.getLogger(SubjectOperators.class.getName()).log(null);
+		catch (Exception e) {
+			System.out.println("Error while writing file: " + e.getMessage());
 		}
 		finally {
 			try {
 				fileOutputStream.close();
 				outputStreamWriter.close();
 				writer.close();
-			} catch (IOException e) {
-				Logger.getLogger(SubjectOperators.class.getName()).log(null);
+			}
+			catch (IOException e) {
+				System.out.println("Error while writing file: " + e.getMessage());
 			}
 		}
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

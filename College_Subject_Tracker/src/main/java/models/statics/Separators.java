@@ -4,9 +4,9 @@ public enum Separators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variable instances
 	//
-	FIRST(1, ";"), SECOND(2, "_"), THIRD(3, "~"), FOURTH(4, "\\"), FIFTH(5, "="), SIXTH(6, "@"), SEVENTH(7, "&"),
+	FIRST(1, ";", ';'), SECOND(2, "_", '_'), THIRD(3, "~", '~'), FOURTH(4, "\\", '\\'), FIFTH(5, "=", '='), SIXTH(6, "&", '&'), SEVENTH(7, "`", '`'),
 	
-	UNDEFINED(-1, "-");
+	UNDEFINED(-1, "-", '-');
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -14,20 +14,24 @@ public enum Separators {
 	//
 	private final int id;
 	private final String character;
+	private final char single_char;
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Main constructor
 	//
-	Separators(int id, String character) {
+	Separators(int id, String character, char single_char) {
 		this.character = character;
 		this.id = id;
+		this.single_char = single_char;
 	}
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Public methods
 	//
+	public final char getChar() {return single_char;}
+	
 	public final String getCharacter() {
 		return character;
 	}

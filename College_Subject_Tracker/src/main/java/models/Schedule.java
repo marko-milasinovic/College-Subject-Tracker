@@ -10,7 +10,7 @@ import models.statics.DayOfWeek;
 import java.io.ObjectInputFilter;
 import java.util.Locale;
 
-public final class Schedule implements Comparable<Schedule>{
+public final class Schedule implements Comparable<Schedule> {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variables
 	//
@@ -23,7 +23,6 @@ public final class Schedule implements Comparable<Schedule>{
 	private Integer lessonCount;
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Constructor for a NEW blank Schedule
 	//
@@ -32,31 +31,29 @@ public final class Schedule implements Comparable<Schedule>{
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Constructor for an EXISTING Schedule
 	//
 	public Schedule(DayOfWeek dayOfWeek, Integer startTime, Integer lessonCount) {
 		
-		if(this.dayOfWeek == null){
+		if (this.dayOfWeek == null) {
 			dayOfWeek = DayOfWeek.UNDEFINED;
-		}else {
+		} else {
 			this.dayOfWeek = dayOfWeek;
 		}
 		
-		if( !(startTime < 1440 && startTime > 0)){
+		if (!(startTime < 1440 && startTime > 0)) {
 			this.startTime = 0;
-		}else{
+		} else {
 			this.startTime = startTime;
 		}
 		
-		if( !(lessonCount > 0 && lessonCount < 100)){
+		if (!(lessonCount > 0 && lessonCount < 100)) {
 			this.lessonCount = 1;
-		}else {
+		} else {
 			this.lessonCount = lessonCount;
 		}
 	}
-	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -87,41 +84,30 @@ public final class Schedule implements Comparable<Schedule>{
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Advanced public methods
 	//
-	public final int getEndTime(){
-		return startTime + (Configs.SCHEDULE_SINGLE_LESSON_DURATION+Configs.SCHEDULE_SINGLE_LESSON_BREAK) * lessonCount;
+	public final int getEndTime() {
+		return startTime + (Configs.SCHEDULE_SINGLE_LESSON_DURATION + Configs.SCHEDULE_SINGLE_LESSON_BREAK) * lessonCount;
 	}
-	//private final Integer getTimeSinceWeekStart(){
-	//		return dayOfWeek.getDayOfWeekConversion() + startTime;
-	//	}
-	//public final boolean isToday(DayOfWeek dayOfWeek){
-	//		return this.dayOfWeek == dayOfWeek;
-	//	}
-	//
-	//	public final boolean isUpcoming(int time){
-	//		return this.startTime > time;
-	//	}
 	
-	public final ScheduleStatus getScheduleStatus(DayOfWeek dayOfWeek, int timeSinceDayStart){
+	public final ScheduleStatus getScheduleStatus(DayOfWeek dayOfWeek, int timeSinceDayStart) {
 		int minDayTime = dayOfWeek.getDayOfWeekConversion();
 		int testDayTime = this.getDayOfWeek().getDayOfWeekConversion();
 		
 		//testing for schedules that are not today
-		if(testDayTime < minDayTime){
+		if (testDayTime < minDayTime) {
 			return ScheduleStatus.PASSED_NOT_TODAY;
-		}else if(testDayTime > dayOfWeek.getDayOfWeekConversion() + DayOfWeek.MONDAY.getDayOfWeekConversion()){
+		} else if (testDayTime > dayOfWeek.getDayOfWeekConversion() + DayOfWeek.MONDAY.getDayOfWeekConversion()) {
 			return ScheduleStatus.UPCOMING_NOT_TODAY;
 		}
 		
 		//Schedule is today
-		if(timeSinceDayStart > startTime + (Configs.SCHEDULE_SINGLE_LESSON_DURATION+Configs.SCHEDULE_SINGLE_LESSON_BREAK) * lessonCount){
+		if (timeSinceDayStart > startTime + (Configs.SCHEDULE_SINGLE_LESSON_DURATION + Configs.SCHEDULE_SINGLE_LESSON_BREAK) * lessonCount) {
 			return ScheduleStatus.PASSED_TODAY;
 		}
 		
-		if(timeSinceDayStart < startTime){
+		if (timeSinceDayStart < startTime) {
 			return ScheduleStatus.UPCOMING_TODAY;
 		}
 		
@@ -129,12 +115,11 @@ public final class Schedule implements Comparable<Schedule>{
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// File-Operators
 	//
-	public final String writeToText(Separators separator){
-		if(separator == Separators.UNDEFINED){
+	public final String writeToText(Separators separator) {
+		if (separator == Separators.UNDEFINED) {
 			System.out.println("Maximum depth reached.");
 			return "";
 		}
@@ -148,15 +133,15 @@ public final class Schedule implements Comparable<Schedule>{
 		return stringBuilder.toString();
 	}
 	
-	public final Schedule readFromText(String line, Separators separator){
-		if(separator == Separators.UNDEFINED){
+	public final Schedule readFromText(String line, Separators separator) {
+		if (separator == Separators.UNDEFINED) {
 			System.out.println("Maximum depth reached.");
 			return this;
 		}
 		
-		String[] inputArray = line.split( separator.getCharacter() );
+		String[] inputArray = line.split(separator.getCharacter());
 		
-		if(inputArray.length < 3) {
+		if (inputArray.length < 3) {
 			System.out.print("Error - bad [Schedule] line-length-input. ");
 		}
 		
@@ -168,32 +153,32 @@ public final class Schedule implements Comparable<Schedule>{
 	}
 	
 	
-	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Overrides
 	//
 	@Override
 	public final String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(
-				dayOfWeek.toString() + ": "
-						+ Utilities.convertToHourFormat(startTime) + " - "
-						+ Utilities.convertToHourFormat(startTime+(Configs.SCHEDULE_SINGLE_LESSON_DURATION+Configs.SCHEDULE_SINGLE_LESSON_BREAK)*lessonCount)
-		);
 		
-		return  stringBuilder.toString();
+		stringBuilder.append(dayOfWeek.toString() + ": ");
+		
+		if (startTime != null && startTime > -1) {
+			stringBuilder.append(Utilities.convertToHourFormat(startTime) + " - ");
+		}
+		if (lessonCount != null && lessonCount > 0) {
+			stringBuilder.append(Utilities.convertToHourFormat(startTime + (Configs.SCHEDULE_SINGLE_LESSON_DURATION + Configs.SCHEDULE_SINGLE_LESSON_BREAK) * lessonCount));
+		}
+		
+		return stringBuilder.toString();
 	}
 	
 	
 	/**
-	 *
 	 * @param schedule
 	 * @return compares based on day of week and start time of lesson
 	 */
 	@Override
 	public int compareTo(Schedule schedule) {
-		return Integer.valueOf(this.dayOfWeek.getDayOfWeekConversion() + this.startTime).compareTo(
-				schedule.getDayOfWeek().getDayOfWeekConversion() + schedule.getStartTime()
-		);
+		return Integer.valueOf(this.dayOfWeek.getDayOfWeekConversion() + this.startTime).compareTo(schedule.getDayOfWeek().getDayOfWeekConversion() + schedule.getStartTime());
 	}
 }

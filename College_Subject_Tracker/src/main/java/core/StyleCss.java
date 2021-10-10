@@ -17,6 +17,7 @@ public class StyleCss {
 	
 	public static final String EPIC_RARITY_COLOUR = "-fx-background-color: darkgoldenrod;" + "-fx-text-fill: #ffffe6;-fx-font-smoothing-type: gray;";
 	
+	
 	public static final String LABEL_RARITY_MOD = "-fx-font-weight: bold;-fx-font-size: 12;" + "-fx-border-radius: 7 7 7 7;-fx-background-radius: 7 7 7 7;";
 	
 	//public static final Color MENUCOLOUR = Color.rgb(209, 159, 33, .99);
@@ -40,16 +41,6 @@ public class StyleCss {
 	
 	public static final String PRESSED_BUTTON_STYLE =    //"-fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;";
 			"-fx-padding: 7 14 14 14;" + "-fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;" + "-fx-background-radius: 8;" + "-fx-background-color:" + "linear-gradient(from 0% 93% to 0% 100%, #ec8e5f 0%, #e97e49 100%)," + "#de886e," + "#eec1aa," + "radial-gradient(center 50% 50%, radius 100%, #eec1aa, #e7a897);" + "-fx-font-style: italic;";
-	
-	
-	//+ "-fx-border-color: #3e190e;"
-	//+ "-fx-border-width: 1 1 1 1;"
-	//+ "-fx-border-radius: 6;";
-	//+ "-fx-font-weight: bold;"
-	
-	//-fx-border-width: 5;
-	//-fx-background-insets: 12;
-	//-fx-border-insets: 10;
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

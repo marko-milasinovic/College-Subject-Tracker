@@ -1,11 +1,13 @@
 package models;
 
+import core.Configs;
 import models.statics.Separators;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+//https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java?rq=1
 public final class Subject implements Comparable<Subject> {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variables
@@ -161,55 +163,115 @@ public final class Subject implements Comparable<Subject> {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// File-Operators
 	//
-	public final String writeToText(Separators separator) {
+	public final int writeToText(Separators separator, char[] buffer) {
 		
 		if (separator == Separators.UNDEFINED) {
 			System.out.println("Maximum depth reached.");
-			return "";
+			return 0;
+			//return Configs.EMPTY_CHAR_ARRAY;
 		}
 		
-		StringBuilder stringBuilder = new StringBuilder();
-		
+		int pos = 0;
 		//OpisPredmeta ARG #0
-		stringBuilder.append(uuid.toString() + separator.getCharacter());
+		for (char c : uuid.toString().toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
 		
 		//OpisPredmeta ARG #1
-		stringBuilder.append(SubjectLongName + separator.getCharacter());
+		for (char c : SubjectLongName.toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
 		
 		//OpisPredmeta ARG #2
-		stringBuilder.append(SubjectShortName + separator.getCharacter());
+		for (char c : SubjectShortName.toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
 		
 		//OpisPredmeta ARG #3
-		stringBuilder.append(subjectDescription + separator.getCharacter());
+		for (char c : subjectDescription.toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
 		
 		//OpisPredmeta ARG #4
-		stringBuilder.append(professor.writeToText(separator.next()) + separator.getCharacter());
+		for (char c : professor.writeToText(separator.next()).toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
 		
 		//OpisPredmeta ARG #5
-		stringBuilder.append(assistent.writeToText(separator.next()) + separator.getCharacter());
+		for (char c : assistent.writeToText(separator.next()).toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
+		
 		
 		//OpisPredmeta ARG #XX
 		//stringBuilder.append(labAssistent.writeToText(separator.getNextSeparator()) + separator.getCharacter());
 		
 		//OpisPredmeta ARG #6
 		for (WebLink webLink : webLinks) {
-			stringBuilder.append(webLink.writeToText(separator.next().next()) + separator.next().getCharacter());
+			for (char c : webLink.writeToText(separator.next().next()).toCharArray()) {
+				buffer[pos] = c;
+				++pos;
+			}
+			buffer[pos] = separator.next().getChar();
+			++pos;
 		}
-		stringBuilder.append(separator.getCharacter());
+		buffer[pos] = separator.getChar();
+		++pos;
+		
 		
 		//OpisPredmeta ARG #7
-		stringBuilder.append(maxEspb + separator.getCharacter());
+		for (char c : String.valueOf(maxEspb).toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
+		
 		
 		//OpisPredmeta ARG #8
-		stringBuilder.append(semesterId + separator.getCharacter());
+		for (char c : String.valueOf(semesterId).toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
+		
 		
 		//OpisPredmeta ARG #9
-		stringBuilder.append(lectureSchedule.writeToText(separator.next()) + separator.getCharacter());
+		for (char c : lectureSchedule.writeToText(separator.next()).toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		++pos;
 		
 		//OpisPredmeta ARG #10
-		stringBuilder.append(exerciseSchedule.writeToText(separator.next()) + separator.getCharacter());
+		for (char c : exerciseSchedule.writeToText(separator.next()).toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		buffer[pos] = separator.getChar();
+		//do not increment pos the last time
 		
-		return stringBuilder.toString();
+		return pos;
 	}
 	
 	public final Subject readFromText(String line, Separators separator) {
@@ -247,6 +309,9 @@ public final class Subject implements Comparable<Subject> {
 		//OpisPredmeta ARG #XX
 		//stringBuilder.append(labAssistent + separator.getCharacter());
 		
+		if (webLinks != null) {
+			webLinks.clear();
+		}
 		// ARG #6
 		String[] webLinkArray = inputArray[6].split(separator.next().getCharacter());
 		for (String string : webLinkArray) {

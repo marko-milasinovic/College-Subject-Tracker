@@ -110,8 +110,7 @@ public final class Person {
 		}
 		
 		// ARG #0
-		//this.uuid = UUID.fromString(inputArray[0]);
-		this.uuid = UUID.randomUUID();
+		this.uuid = UUID.fromString(inputArray[0]);
 		
 		// ARG #1
 		this.firstName = inputArray[1];

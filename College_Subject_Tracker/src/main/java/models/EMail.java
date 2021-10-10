@@ -5,7 +5,6 @@ import core.Patterns;
 import models.statics.Separators;
 
 import java.util.Locale;
-import java.util.UUID;
 import java.util.regex.Matcher;
 
 public final class EMail {

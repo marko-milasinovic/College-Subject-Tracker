@@ -79,6 +79,7 @@ public final class WebLink {
 		if (isValidURL(line)) {
 			this.webLink = line;
 		} else {
+			System.out.println(line);
 			System.out.println("Invalid WebLink.");
 			this.webLink = Configs.SINGLE_SPACE;
 		}
