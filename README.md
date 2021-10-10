@@ -17,8 +17,8 @@ Supported Languages: English
 * [OpenJDK - runtime](https://www.openlogic.com/openjdk-downloads)
 
 ## Project core release status
-- [ ] Main subject viewer screen (Main view screen, where the user can look at all subjects)
-    - [ ] Auto updated current subject information
+- [x] Main subject viewer screen (Main view screen, where the user can look at all subjects)
+    - [x] Auto updated current subject information
     - [x] Coloured current day's subjects in table
 - [x] Read data from file
     - [x] Write data to file
@@ -29,7 +29,7 @@ Supported Languages: English
 - [ ] First release
 
 ## Project feature release status
-- [ ] Subject editor screen (Edit view screen, where the user can add/edit/delete subjects and their info)
+- [x] Subject editor screen (Edit view screen, where the user can add/edit/delete subjects and their info)
 - [x] .txt human readable save files
     - [ ] optional .gson save files
 - [ ] System specific save file paths (in ../user directory in a .json format.)
