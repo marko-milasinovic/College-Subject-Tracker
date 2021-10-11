@@ -1,14 +1,9 @@
 package repositories.subject;
 
 
-import core.Configs;
 import models.Subject;
-import models.statics.Separators;
-import org.apache.commons.io.FileUtils;
-import oshi.SystemInfo;
 import repositories.InMemoryAbstractRepository;
 
-import java.io.File;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -83,12 +78,12 @@ public final class InMemorySubjectRepository extends InMemoryAbstractRepository 
 		}
 		
 		Subject originalSubject = getSubject(subject.getUuid());
-		
 		if (originalSubject == null) {
 			return null;
 		}
 		
-		originalSubject.readFromText(subject.writeToText(Separators.FIRST), Separators.FIRST);
+		deleteSubject(subject.getUuid());
+		addSubject(subject);
 		
 		return subject;
 	}

@@ -4,10 +4,6 @@ import core.Configs;
 import core.StyleCss;
 import core.Utilities;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -16,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -144,9 +139,7 @@ public final class TrackerScene extends BorderPane {
 		
 		hb_Top_N1_Header.getChildren().addAll(btn_DayOfWeek, new Separator(Orientation.VERTICAL));
 		
-		for (DayOfWeek day : DayOfWeek.values()) {
-			if (day == DayOfWeek.UNDEFINED) { continue; }
-			
+		for (DayOfWeek day : DayOfWeek.VALID_VALUES) {
 			btn_DayOfWeek = Creators.createButton(day.getLocalisedName());
 			
 			btn_DayOfWeek.setOnAction(event -> updateCurrentSubject(day, 1));
@@ -358,7 +351,7 @@ public final class TrackerScene extends BorderPane {
 	
 	private final void updateCurrentSubject(DayOfWeek dayOfWeek, int time) {
 		Thread thread = new Thread(() -> {
-			List<Subject> subjectList = subjectRepository.getSubjects();
+			List<Subject> subjectList = subjectRepository.all();
 			
 			if (!(subjectList != null && !subjectList.isEmpty())) {
 				return;
@@ -390,7 +383,9 @@ public final class TrackerScene extends BorderPane {
 		
 		Collection<WebLink> webLinks = subject.getWebLinks();
 		if (webLinks != null && !webLinks.isEmpty()) {
-			cmb_SubjectWebLinks.getItems().clear();
+			if (!cmb_SubjectWebLinks.getItems().isEmpty()) {
+				cmb_SubjectWebLinks.getItems().clear();
+			}
 			cmb_SubjectWebLinks.getItems().addAll(webLinks);
 			cmb_SubjectWebLinks.getSelectionModel().select(0);
 		}
