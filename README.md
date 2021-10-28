@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/github/license/marko-milasinovic/College-Subject-Tracker?style=flat-square">
 </p>
 
-# [💾Download Latest Stable Build](https://github.com/marko-milasinovic/College-Subject-Tracker/releases)
+# [💾Download Latest Stable Build](https://github.com/marko-milasinovic/College-Subject-Tracker/releases/latest)
 Supported Languages: English
 
 ## Built and run with
