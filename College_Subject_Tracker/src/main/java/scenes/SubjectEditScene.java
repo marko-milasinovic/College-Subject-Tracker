@@ -1,16 +1,8 @@
 package scenes;
 
 import core.Configs;
-import core.StyleCss;
 import core.Utilities;
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -18,31 +10,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import models.Person;
 import models.Schedule;
 import models.Subject;
 import models.WebLink;
 import models.statics.DayOfWeek;
-import models.statics.ScheduleStatus;
 import repositories.image.IImageRepository;
 import repositories.subject.ISubjectRepository;
-import scenes.statics.UtilsFX;
-import viewers.SubjectViewer;
 
-import java.awt.*;
-import java.net.URI;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -240,7 +222,7 @@ public final class SubjectEditScene extends BorderPane {
 	private final void implementLogic() {
 		
 		btn_SaveChanges.setOnAction(event1 -> {
-			saveSubject();
+			saveSubjectToRepository();
 			fileOperators.FileUtils.saveFiles(subjectRepository);
 			
 			changeScene(new TrackerScene(primaryStage, subjectRepository, imageRepository, executor));
@@ -277,7 +259,7 @@ public final class SubjectEditScene extends BorderPane {
 		// Logic
 		//
 		menuItem_Return.setOnAction(event -> {
-			changeScene(new TrackerScene(primaryStage, subjectRepository, imageRepository, executor));
+			//changeScene(new SubjectEditScene(primaryStage, subjectRepository, imageRepository, executor, selected.getUuid()));
 		});
 		
 		
@@ -299,7 +281,7 @@ public final class SubjectEditScene extends BorderPane {
 			tf_SubjectLongName.setText(Configs.EMPTY_STRING);
 		}
 		
-		String subjectShortName = displayedSubject.getSubjectLongName();
+		String subjectShortName = displayedSubject.getSubjectShortName();
 		if (subjectShortName != null && !subjectShortName.isEmpty()) {
 			tf_SubjectShortName.setText(subjectShortName);
 		} else {
@@ -364,7 +346,7 @@ public final class SubjectEditScene extends BorderPane {
 	}
 	
 	
-	private final void saveSubject() {
+	private final void saveSubjectToRepository() {
 		String test = tf_SubjectLongName.getText();
 		if (test != null && test.isEmpty()) {
 			displayedSubject.setSubjectLongName(test);
@@ -426,7 +408,5 @@ public final class SubjectEditScene extends BorderPane {
 		
 		primaryStage.getScene().setRoot(borderPane);
 		primaryStage.show();
-		
-		return;
 	}
 }

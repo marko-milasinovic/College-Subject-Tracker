@@ -1,6 +1,7 @@
 package repositories.subject;
 
 
+import core.SerialiseUtils;
 import models.Subject;
 import repositories.InMemoryAbstractRepository;
 
@@ -29,14 +30,16 @@ public final class InMemorySubjectRepository extends InMemoryAbstractRepository 
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	// Methods
+	// Public Methods
 	//
 	public final Subject getSubject(UUID uuid) {
 		ListIterator<Subject> iterator = subjects.listIterator();
 		
 		while (iterator.hasNext()) {
 			Subject subject = iterator.next();
-			if (subject.getUuid().equals(uuid)) return subject;
+			if (subject.getUuid().equals(uuid)) {
+				return (Subject) SerialiseUtils.cloneObject(subject);
+			}
 		}
 		
 		return null;
@@ -73,12 +76,7 @@ public final class InMemorySubjectRepository extends InMemoryAbstractRepository 
 	
 	@Override
 	public final Subject editSubject(Subject subject) {
-		if (!(subjects != null && !subjects.isEmpty())) {
-			return null;
-		}
-		
-		Subject originalSubject = getSubject(subject.getUuid());
-		if (originalSubject == null) {
+		if (!(subjects != null && !subjects.isEmpty() && subject != null)) {
 			return null;
 		}
 		
@@ -88,4 +86,18 @@ public final class InMemorySubjectRepository extends InMemoryAbstractRepository 
 		return subject;
 	}
 	
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// Private Methods
+	//
+	private final Subject getSubjectOriginal(UUID uuid) {
+		ListIterator<Subject> iterator = subjects.listIterator();
+		
+		while (iterator.hasNext()) {
+			Subject subject = iterator.next();
+			if (subject.getUuid().equals(uuid)) return subject;
+		}
+		
+		return null;
+	}
 }

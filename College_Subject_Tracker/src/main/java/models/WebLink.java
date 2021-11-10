@@ -2,6 +2,7 @@ package models;
 
 import core.Configs;
 import core.Patterns;
+import fileOperators.FileUtils;
 import models.statics.Separators;
 
 import java.util.regex.Matcher;
@@ -10,6 +11,7 @@ public final class WebLink {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Variables
 	//
+	private String description;
 	private String webLink;
 	
 	
@@ -23,14 +25,17 @@ public final class WebLink {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Constructor for an EXISTING WebLink
 	//
-	public WebLink(String webLink) {
+	public WebLink(String description, String webLink) {
 		this();
 		
-		if (!(webLink.isBlank() && webLink.length() < Configs.MAX_LINK_LENGTH && !isValidURL(webLink))) {
-			this.webLink = webLink;
-		} else {
-			this.webLink = "";
-			System.out.println("Invalid URL created!");
+		if(!setWebLink(webLink)){
+			this.webLink = Configs.EMPTY_STRING;
+			System.out.println("Invalid URL given!");
+		}
+		
+		if(!setDescription(description)){
+			this.description = Configs.EMPTY_STRING;
+			System.out.println("Invalid Description given!");
 		}
 	}
 	
@@ -42,9 +47,27 @@ public final class WebLink {
 		return webLink;
 	}
 	
-	public final void setWebLink(String webLink) {
+	public final boolean setWebLink(String webLink) {
+		if ( !( !webLink.isBlank() && webLink.length() < Configs.MAX_LINK_LENGTH && isValidURL(webLink) )) {
+			return false;
+		}
+		
 		this.webLink = webLink;
+		return true;
 	}
+	
+	public final String getDescription() {
+		return description;
+	}
+	
+	public final boolean setDescription(String description) {
+		if (description.isBlank()) {
+			return false;
+		}
+		this.description = description;
+		return true;
+	}
+	
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -59,13 +82,29 @@ public final class WebLink {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// File-Operators
 	//
-	public final String writeToText(Separators separator) {
+	public final char[] writeToText(Separators separator) {
 		if (separator == Separators.UNDEFINED) {
 			System.out.println("Maximum depth reached.");
-			return Configs.SINGLE_SPACE;
+			return Configs.EMPTY_CHAR_ARRAY;
 		}
 		
-		return webLink;
+		char[] buffer = new char[description.length() + webLink.length() + 1];
+		
+		int pos = 0;
+		for (char c : description.toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		
+		buffer[pos] = separator.getChar();
+		++pos;
+		
+		for (char c : webLink.toCharArray()) {
+			buffer[pos] = c;
+			++pos;
+		}
+		
+		return buffer;
 	}
 	
 	
@@ -75,14 +114,17 @@ public final class WebLink {
 			return this;
 		}
 		
-		// ARG #0
-		if (isValidURL(line)) {
-			this.webLink = line;
-		} else {
-			System.out.println(line);
-			System.out.println("Invalid WebLink.");
-			this.webLink = Configs.SINGLE_SPACE;
+		String[] inputArray = line.split(separator.getCharacter());
+		
+		if (inputArray.length < 2) {
+			System.out.print("Error - bad [WebLink] line-length-input. ");
 		}
+		
+		// ARG #0
+		setDescription(inputArray[0]);
+		
+		// ARG #1
+		setWebLink(inputArray[1]);
 		
 		return this;
 	}
@@ -93,7 +135,6 @@ public final class WebLink {
 	//
 	@Override
 	public final String toString() {
-		if (webLink.contains("//")) return webLink.split("//")[1];
-		return webLink;
+		return description;
 	}
 }

@@ -16,6 +16,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -39,18 +41,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public final class TrackerScene extends BorderPane {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	// Variables
+	// Final variables (initialised in constructor)
 	//
-	private Stage primaryStage;
-	private ISubjectRepository subjectRepository;
-	private IImageRepository imageRepository;
-	private ThreadPoolExecutor executor;
+	private final Stage primaryStage;
+	private final ISubjectRepository subjectRepository;
+	private final IImageRepository imageRepository;
+	private final ThreadPoolExecutor executor;
 	
-	private VBox vb_Complete;
+	private final VBox vb_Complete;
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	// Subject scene element information variables
+	// Non-final variables (Subject element information)
 	//
 	private Subject currentSubject;
 	private TextField tf_SubjectLongName;
@@ -62,6 +64,11 @@ public final class TrackerScene extends BorderPane {
 	private TableColumn<Subject, String> tcShortName, tcLectures, tcExercises;
 	private Button btn_ShowDetailed;
 	private GridPane gp_SubjectInfo;
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// Non-final clipboard variables
+	//
+	//private Clipboard clipboard;
 	
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -88,6 +95,8 @@ public final class TrackerScene extends BorderPane {
 		//addTooltips();
 		
 		this.setCenter(Creators.createScrollPane(vb_Complete));
+		
+		//clipboard = Clipboard.getSystemClipboard();
 	}
 	
 	
@@ -117,9 +126,33 @@ public final class TrackerScene extends BorderPane {
 		Tooltip.install(iv_LaunchDefaultBrowserWithLink, UtilsFX.formatTooltip("Otvori web stranicu", iv_LaunchDefaultBrowserWithLink));
 		gp_SubjectInfo.add(iv_LaunchDefaultBrowserWithLink, 2, 1);
 		
+		ImageView iv_CopyToClipboard = new ImageView();
+		UtilsFX.createCustomThumbnail(iv_CopyToClipboard, imageRepository.getImage("copy"));
+		Tooltip.install(iv_CopyToClipboard, UtilsFX.formatTooltip("Kopiraj u clipboard", iv_CopyToClipboard));
+		gp_SubjectInfo.add(iv_CopyToClipboard, 3, 1);
+		
 		iv_LaunchDefaultBrowserWithLink.setOnMouseClicked(event1 -> {
 			try {
-				Desktop.getDesktop().browse(new URI("https://" + cmb_SubjectWebLinks.getSelectionModel().getSelectedItem().toString()));
+				int pos = cmb_SubjectWebLinks.getSelectionModel().getSelectedIndex();
+				
+				List<WebLink> webLinks = currentSubject.getWebLinks();
+				
+				WebLink webLink = webLinks.get(pos);
+				Desktop.getDesktop().browse(new URI(webLink.getWebLink()));
+			}
+			catch (Exception e) {    //IOException, URISyntaxException
+				System.out.println(e.getLocalizedMessage());
+			}
+		});
+		
+		iv_CopyToClipboard.setOnMouseClicked(event1 -> {
+			try {
+				int pos = cmb_SubjectWebLinks.getSelectionModel().getSelectedIndex();
+				
+				List<WebLink> webLinks = currentSubject.getWebLinks();
+				WebLink webLink = webLinks.get(pos);
+				
+				updateClipboard(webLink.getWebLink());
 			}
 			catch (Exception e) {    //IOException, URISyntaxException
 				System.out.println(e.getLocalizedMessage());
@@ -226,8 +259,8 @@ public final class TrackerScene extends BorderPane {
 	// Logic for scene elements ?? should be combined
 	//
 	private final void implementLogic() {
-		tcShortName = new TableColumn<Subject, String>("Predmet");
-		tcShortName.setCellValueFactory(new PropertyValueFactory<Subject, String>("SubjectLongName"));
+		tcShortName = new TableColumn<>("Predmet");
+		tcShortName.setCellValueFactory(new PropertyValueFactory<>("SubjectLongName"));
 		tcShortName.setMinWidth(150);
 		tcShortName.setMaxWidth(300);
 		tcShortName.setStyle("-fx-alignment: CENTER;");
@@ -237,7 +270,7 @@ public final class TrackerScene extends BorderPane {
 		tcLectures.setMinWidth(150);
 		tcLectures.setMaxWidth(200);
 		
-		tcExercises = new TableColumn<Subject, String>("Vežbe");
+		tcExercises = new TableColumn<>("Vežbe");
 		tcExercises.setCellValueFactory(new PropertyValueFactory<>("ExerciseScheduleString"));
 		tcExercises.setMinWidth(150);
 		tcExercises.setMaxWidth(200);
@@ -375,13 +408,15 @@ public final class TrackerScene extends BorderPane {
 	
 	
 	private final void updateDisplayedSubjectInfo(Subject subject) {
-		if (subject == null) {
+		if ( !(subject != null && subject != currentSubject)) {
 			resetSubjectInfo();
 			return;
 		}
+		
+		currentSubject = subject;
 		tf_SubjectLongName.setText(subject.getSubjectLongName());
 		
-		Collection<WebLink> webLinks = subject.getWebLinks();
+		List<WebLink> webLinks = subject.getWebLinks();
 		if (webLinks != null && !webLinks.isEmpty()) {
 			if (!cmb_SubjectWebLinks.getItems().isEmpty()) {
 				cmb_SubjectWebLinks.getItems().clear();
@@ -391,8 +426,6 @@ public final class TrackerScene extends BorderPane {
 		}
 		
 		ta_SubjectDescription.setText(subject.getSubjectDescription());
-		
-		return;
 	}
 	
 	
@@ -502,51 +535,53 @@ public final class TrackerScene extends BorderPane {
 			return;
 		}
 		
-		tcArg.setCellFactory(column -> new TableCell<Subject, String>() {
-			@Override
-			protected void updateItem(String item, boolean empty) {
-				super.updateItem(item, empty); // This is mandatory
-				
-				if (item == null || empty) {
-					setText(null);
-					setStyle("");
-				} else {  // If the cell is not empty
-					setText(item); // Put the String data in the cell
-					Subject itemTest = getTableView().getItems().get(getIndex());
+		tcArg.setCellFactory(column -> {
+			return new TableCell<Subject, String>() {
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty); // This is mandatory
 					
-					ScheduleStatus testScheduleStatus = SubjectViewer.getSubjectStatus(itemTest, dayOfWeek, time);
-					
-					if (testScheduleStatus.equals(ScheduleStatus.UPCOMING_TODAY)) {
-						setStyle(StyleCss.COMMON_RARITY_COLOUR);
-					} else if (testScheduleStatus.equals(ScheduleStatus.PASSED_TODAY)) {
-						setStyle(StyleCss.RED_FINISHED_TYPE_COLOUR);
-					} else if (testScheduleStatus.equals(ScheduleStatus.IN_PROGRESS)) {
-						setStyle(StyleCss.GREEN_FINISHED_TYPE_COLOUR);
-					} else {
-						//never use setTextFill(Color.BLACK), it makes letters almost illegible
-						setStyle(StyleCss.REGULAR_TEXT);
+					if (item == null || empty) {
+						setText(null);
+						setStyle("");
+					} else {  // If the cell is not empty
+						setText(item); // Put the String data in the cell
+						Subject itemTest = getTableView().getItems().get(getIndex());
+						
+						ScheduleStatus testScheduleStatus = SubjectViewer.getSubjectStatus(itemTest, dayOfWeek, time);
+						
+						if (testScheduleStatus.equals(ScheduleStatus.UPCOMING_TODAY)) {
+							setStyle(StyleCss.COMMON_RARITY_COLOUR);
+						} else if (testScheduleStatus.equals(ScheduleStatus.PASSED_TODAY)) {
+							setStyle(StyleCss.RED_FINISHED_TYPE_COLOUR);
+						} else if (testScheduleStatus.equals(ScheduleStatus.IN_PROGRESS)) {
+							setStyle(StyleCss.GREEN_FINISHED_TYPE_COLOUR);
+						} else {
+							//never use setTextFill(Color.BLACK), it makes letters almost illegible
+							setStyle(StyleCss.REGULAR_TEXT);
+						}
+						//switch (testScheduleStatus) {	//DOESNT WORK FOR SOME REASON
+						//						case UPCOMING_TODAY:
+						//							setStyle(StyleCss.COMMON_RARITY_COLOUR);
+						//						case PASSED_TODAY:
+						//							setStyle(StyleCss.COMMON_RARITY_COLOUR);
+						//						case IN_PROGRESS:
+						//							setStyle(StyleCss.GREEN_FINISHED_TYPE_COLOUR);
+						//						default:
+						//							setTextFill(Color.BLACK);
+						//							setStyle("-fx-background-color: transparent");
+						//					}
+						
+						
+						
+						/*
+						 * { //Here I can see if the row of this cell is selected or not
+						 * if(getTableView().getSelectionModel().getSelectedItems().contains(itemTest))
+						 * setTextFill(Color.WHITE); else setTextFill(Color.BLACK); }
+						 */
 					}
-					//switch (testScheduleStatus) {	//DOESNT WORK FOR SOME REASON
-					//						case UPCOMING_TODAY:
-					//							setStyle(StyleCss.COMMON_RARITY_COLOUR);
-					//						case PASSED_TODAY:
-					//							setStyle(StyleCss.COMMON_RARITY_COLOUR);
-					//						case IN_PROGRESS:
-					//							setStyle(StyleCss.GREEN_FINISHED_TYPE_COLOUR);
-					//						default:
-					//							setTextFill(Color.BLACK);
-					//							setStyle("-fx-background-color: transparent");
-					//					}
-					
-					
-					
-					/*
-					 * { //Here I can see if the row of this cell is selected or not
-					 * if(getTableView().getSelectionModel().getSelectedItems().contains(itemTest))
-					 * setTextFill(Color.WHITE); else setTextFill(Color.BLACK); }
-					 */
 				}
-			}
+			};
 		});
 	}
 	
@@ -562,5 +597,14 @@ public final class TrackerScene extends BorderPane {
 		primaryStage.show();
 		
 		return;
+	}
+	
+	private final void updateClipboard(String content){
+		if( !(!content.isBlank() && !content.isEmpty())){
+			return;
+		}
+		ClipboardContent clipboardContent = new ClipboardContent();
+		clipboardContent.putString(content);
+		Clipboard.getSystemClipboard().setContent(clipboardContent);
 	}
 }

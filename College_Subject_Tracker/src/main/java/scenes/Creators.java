@@ -27,6 +27,16 @@ class Creators {
 		return comboBox;
 	}
 	
+	protected static final ComboBox createComboBox(Collection collection) {
+		ComboBox comboBox = createComboBox();
+		
+		if (collection != null && !collection.isEmpty()) {
+			comboBox.getItems().addAll(collection);
+			comboBox.getSelectionModel().select(0);
+		}
+		
+		return comboBox;
+	}
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// TextField
@@ -76,7 +86,7 @@ class Creators {
 	// VBox
 	//
 	protected static final VBox createVBox() {
-		VBox vBox = new VBox(5);
+		VBox vBox = new VBox(10);
 		vBox.setAlignment(Pos.CENTER);
 		
 		return vBox;
@@ -179,7 +189,7 @@ class Creators {
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Complete VBox
 	//
-	protected static final void makeVBoxComplete(VBox complete, HBox top) {
+	protected static final void makeVBoxComplete(VBox complete, HBox top) {    //soon to be deprecated
 		complete.setAlignment(Pos.CENTER);
 		complete.setPadding(new Insets(20, 20, 20, 5));
 		complete.getChildren().addAll(top);
@@ -195,6 +205,34 @@ class Creators {
 	protected static final void makeVBoxComplete(VBox complete, HBox top, HBox middle, HBox bottom) {
 		makeVBoxComplete(complete, top, middle);
 		complete.getChildren().addAll(bottom);
+	}
+	
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// Complete VBox
+	//
+	protected static final Node layoutSideBySide(String label, Node leftNode, Node rightNode) {
+		Node node = layoutSideBySide(leftNode, rightNode);
+		return layoutAboveBelow(new Label(label), node);
+	}
+	
+	protected static final Node layoutSideBySide(Node leftNode, Node rightNode) {
+		HBox hBox = createHBox();
+		hBox.getChildren().addAll(leftNode, rightNode);
+		
+		return hBox;
+	}
+	
+	protected static final Node layoutAboveBelow(Node aboveNode, Node belowNode) {
+		VBox vBox = createVBox();
+		vBox.getChildren().addAll(aboveNode, belowNode);
+		
+		return vBox;
+	}
+	
+	protected static final Node layoutAboveBelow(String label, Node leftNode, Node rightNode) {
+		Node node = layoutAboveBelow(leftNode, rightNode);
+		return layoutAboveBelow(new Label(label), node);
 	}
 	
 	

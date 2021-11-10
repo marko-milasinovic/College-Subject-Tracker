@@ -115,11 +115,6 @@ public class Main extends Application {
             return STARTUP_CONFIGURATION.INVALID;
         }
         
-        if(Configs.initialiseConfigs() == false){
-            System.out.println("Configuration couldn't be loaded!");
-            return STARTUP_CONFIGURATION.INVALID;
-        }
-        
         if(MyFileUtils.createFileIfNotExists(Configs.FULL_SAVE_FILE_JAR_PATH) == false){
             System.out.println("File location couldn't be loaded!");
             return STARTUP_CONFIGURATION.INVALID;

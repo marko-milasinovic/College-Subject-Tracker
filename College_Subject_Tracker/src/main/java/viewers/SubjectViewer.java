@@ -12,7 +12,7 @@ public abstract class SubjectViewer {
 	// Methods
 	//
 	public static final ScheduleStatus getSubjectScheduleStatus(Schedule schedule, DayOfWeek dayOfWeek, int time) {
-		if(schedule == null){
+		if (schedule == null) {
 			return ScheduleStatus.PASSED_NOT_TODAY;
 		}
 		
@@ -39,15 +39,15 @@ public abstract class SubjectViewer {
 		ScheduleStatus exerciseStatus = getSubjectScheduleStatus(subject.getExerciseSchedule(), dayOfWeek, time);
 		
 		//if any is in progress return in progress
-		if(lectureStatus == ScheduleStatus.IN_PROGRESS || exerciseStatus == ScheduleStatus.IN_PROGRESS){
+		if (lectureStatus == ScheduleStatus.IN_PROGRESS || exerciseStatus == ScheduleStatus.IN_PROGRESS) {
 			return ScheduleStatus.IN_PROGRESS;
 		}
 		//if any is upcoming return upcoming
-		else if(lectureStatus == ScheduleStatus.UPCOMING_TODAY || exerciseStatus == ScheduleStatus.UPCOMING_TODAY){
+		else if (lectureStatus == ScheduleStatus.UPCOMING_TODAY || exerciseStatus == ScheduleStatus.UPCOMING_TODAY) {
 			return ScheduleStatus.UPCOMING_TODAY;
 		}
 		//if any passed today return passed today (by this point none can be upcoming today)
-		else if(lectureStatus == ScheduleStatus.PASSED_TODAY || exerciseStatus == ScheduleStatus.PASSED_TODAY){
+		else if (lectureStatus == ScheduleStatus.PASSED_TODAY || exerciseStatus == ScheduleStatus.PASSED_TODAY) {
 			return ScheduleStatus.PASSED_TODAY;
 		}
 		

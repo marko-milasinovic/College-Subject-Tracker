@@ -196,7 +196,7 @@ public final class Subject implements Comparable<Subject> {
 		buffer[pos] = separator.getChar();
 		++pos;
 		
-		//OpisPredmeta ARG #3
+		//subjectDescription ARG #3
 		for (char c : subjectDescription.toCharArray()) {
 			buffer[pos] = c;
 			++pos;
@@ -204,7 +204,7 @@ public final class Subject implements Comparable<Subject> {
 		buffer[pos] = separator.getChar();
 		++pos;
 		
-		//OpisPredmeta ARG #4
+		//professor ARG #4
 		for (char c : professor.writeToText(separator.next()).toCharArray()) {
 			buffer[pos] = c;
 			++pos;
@@ -212,7 +212,7 @@ public final class Subject implements Comparable<Subject> {
 		buffer[pos] = separator.getChar();
 		++pos;
 		
-		//OpisPredmeta ARG #5
+		//Assistent ARG #5
 		for (char c : assistent.writeToText(separator.next()).toCharArray()) {
 			buffer[pos] = c;
 			++pos;
@@ -224,20 +224,20 @@ public final class Subject implements Comparable<Subject> {
 		//OpisPredmeta ARG #XX
 		//stringBuilder.append(labAssistent.writeToText(separator.getNextSeparator()) + separator.getCharacter());
 		
-		//OpisPredmeta ARG #6
+		//WebLink ARG #6
 		for (WebLink webLink : webLinks) {
-			for (char c : webLink.writeToText(separator.next().next()).toCharArray()) {
+			for (char c : webLink.writeToText(separator.next().next())) {
 				buffer[pos] = c;
 				++pos;
 			}
 			buffer[pos] = separator.next().getChar();
 			++pos;
 		}
-		buffer[pos] = separator.getChar();
-		++pos;
+		buffer[pos-1] = separator.getChar();
+		//++pos;
 		
 		
-		//OpisPredmeta ARG #7
+		//maxEspb ARG #7
 		for (char c : String.valueOf(maxEspb).toCharArray()) {
 			buffer[pos] = c;
 			++pos;
@@ -246,7 +246,7 @@ public final class Subject implements Comparable<Subject> {
 		++pos;
 		
 		
-		//OpisPredmeta ARG #8
+		//semesterId ARG #8
 		for (char c : String.valueOf(semesterId).toCharArray()) {
 			buffer[pos] = c;
 			++pos;
@@ -255,7 +255,7 @@ public final class Subject implements Comparable<Subject> {
 		++pos;
 		
 		
-		//OpisPredmeta ARG #9
+		//lectureSchedule ARG #9
 		for (char c : lectureSchedule.writeToText(separator.next()).toCharArray()) {
 			buffer[pos] = c;
 			++pos;
@@ -263,13 +263,15 @@ public final class Subject implements Comparable<Subject> {
 		buffer[pos] = separator.getChar();
 		++pos;
 		
-		//OpisPredmeta ARG #10
+		//exerciseSchedule ARG #10
 		for (char c : exerciseSchedule.writeToText(separator.next()).toCharArray()) {
 			buffer[pos] = c;
 			++pos;
 		}
+		
 		buffer[pos] = separator.getChar();
 		//do not increment pos the last time
+		//++pos;
 		
 		return pos;
 	}
@@ -315,7 +317,7 @@ public final class Subject implements Comparable<Subject> {
 		// ARG #6
 		String[] webLinkArray = inputArray[6].split(separator.next().getCharacter());
 		for (String string : webLinkArray) {
-			this.webLinks.add(new WebLink().readFromText(string, separator.next()));
+			this.webLinks.add(new WebLink().readFromText(string, separator.next().next()));
 		}
 		
 		// ARG #7
