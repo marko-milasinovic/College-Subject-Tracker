@@ -6,6 +6,7 @@
 <p align="center">
 <img src="https://img.shields.io/badge/Support-Windows%20x64-blue?logo=Windows&style=flat-square">
 <img src="https://img.shields.io/github/license/marko-milasinovic/College-Subject-Tracker?style=flat-square">
+[![Lines Of Code](https://tokei.rs/b1/github/marko-milasinovic/College-Subject-Tracker?category=code)](https://github.com/marko-milasinovic/College-Subject-Tracker)
 </p>
 
 # [💾Download Latest Stable Build](https://github.com/marko-milasinovic/College-Subject-Tracker/releases/latest)
