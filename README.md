@@ -4,8 +4,8 @@
 <h3 align="center"> Offline java application for tracking the time of lectures and other subject specific info throughout the semester </h3>
 
 <p align="center">
-<img src="https://img.shields.io/badge/Support-Windows%20x64-blue?logo=Windows&style=flat-square">
-<img src="https://img.shields.io/github/license/marko-milasinovic/College-Subject-Tracker?style=flat-square">
+<img src="https://img.shields.io/badge/Support-Windows%20x64-blue?logo=Windows&style=flat">
+<img src="https://img.shields.io/github/license/marko-milasinovic/College-Subject-Tracker?style=flat">
 <img src="https://tokei.rs/b1/github/marko-milasinovic/College-Subject-Tracker?category=code">
 </p>
 
